@@ -33,6 +33,12 @@ int main(int argc, char *argv[])
         "Update and overwrite the existing mesh useful for adaptive mesh refinement"
     );
 
+    Foam::argList::addBoolOption
+    (
+        "stokes",
+        "Apply the Stokes assumption - disable the momentum convection term."
+    );
+
     #include "postProcess.H"
 
     #include "addCheckCaseOptions.H"

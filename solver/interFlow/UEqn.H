@@ -2,12 +2,17 @@
 
     fvVectorMatrix UEqn
     (
-        fvm::ddt(rho, U) + fvm::div(rhoPhi, U)
+        fvm::ddt(rho, U) // + fvm::div(rhoPhi, U)
       + MRF.DDt(rho, U)
       + turbulence->divDevRhoReff(rho, U)
      ==
         fvOptions(rho, U)
     );
+
+    if (! args.optionFound("stokes"))
+    {
+        UEqn += fvm::div(rhoPhi, U);
+    }
 
     UEqn.relax();
 

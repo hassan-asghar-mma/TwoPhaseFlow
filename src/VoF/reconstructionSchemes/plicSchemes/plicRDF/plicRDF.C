@@ -366,47 +366,51 @@ void Foam::reconstruction::plicRDF::centreAndNormalBC()
                 boundary[patchi].nf()
             );
 
-            // Reset nHatp to correspond to the contact angle
-            forAll(nbf[patchi],i)
-            {
-                const label celli = boundary[patchi].faceCells()[i];
-                const label faceI = boundary[patchi].start() + i;
-                vector n = normal_[celli];
-                if(mag(n) != 0)
-                {
-                    n /= mag(n);
-                    label cutStatus = cutFace.calcSubFace
-                    (
-                        faceI,
-                        n,
-                        centre_[celli]
-                    );
+            // // Reset nHatp to correspond to the contact angle
+            // forAll(nbf[patchi],i)
+            // {
+            //     const label celli = boundary[patchi].faceCells()[i];
+            //     const label faceI = boundary[patchi].start() + i;
+            //     vector n = normal_[celli];
+            //     if(mag(n) != 0)
+            //     {
+            //         n /= mag(n);
+            //         label cutStatus = cutFace.calcSubFace
+            //         (
+            //             faceI,
+            //             n,
+            //             centre_[celli]
+            //         );
 
-                    if(cutStatus == 0)
-                    {
-                        //const point cutEdgeCentre = average(cutFace.surfacePoints());
+            //         if(cutStatus == 0)
+            //         {
+            //             //const point cutEdgeCentre = average(cutFace.surfacePoints());
 
-                        // project Normal on the face
-                        vector projN = (tensor::I - nf[i]*nf[i]) & n;
+            //             // project Normal on the face
+            //             vector projN = (tensor::I - nf[i]*nf[i]) & n;
 
-                        // normalise
-                        projN /= mag(projN) + SMALL;
+            //             // normalise
+            //             projN /= mag(projN) + SMALL;
 
-                        vector nTheta = sin(theta[i])*nf[i] - cos(theta[i])*projN;
-                        vector nHat =  cos(theta[i])*nf[i] + sin(theta[i])*projN;
+            //             vector nTheta = sin(theta[i])*nf[i] - cos(theta[i])*projN;
+            //             vector nHat =  cos(theta[i])*nf[i] + sin(theta[i])*projN;
 
-                        cbf[patchi][i] = centre_[celli] + 2*nTheta/boundary[patchi].deltaCoeffs()[i]; // should point outside of the domain
-                        nbf[patchi][i] = nHat*mag(normal_[celli]);
+            //             cbf[patchi][i] = centre_[celli] + 2*nTheta/boundary[patchi].deltaCoeffs()[i]; // should point outside of the domain
+            //             nbf[patchi][i] = nHat*mag(normal_[celli]);
+            //             normal_[celli] = nbf[patchi][i];
+            //             scalar contactAngle = acos(((nbf[patchi][i]) & nf[i]) / (mag((nbf[patchi][i])) * mag(nf[i]))) * 180/M_PI;
+            //             Info << nl << " contact angle in plicrdf " << contactAngle << nl;
 
-                    }
 
-                }
-                else
-                {
-                    cbf[patchi][i] = vector::zero;
-                    nbf[patchi][i] = vector::zero;
-                }
-            }
+            //         }
+
+            //     }
+            //     else
+            //     {
+            //         cbf[patchi][i] = vector::zero;
+            //         nbf[patchi][i] = vector::zero;
+            //     }
+            // }
 
             acap.evaluate();
         }

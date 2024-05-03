@@ -1,0 +1,111 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 1d8f0d55f7-20231221 OPENFOAM=2312 version=v2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : checkMesh
+Date   : Apr 26 2024
+Time   : 17:19:03
+Host   : mma110629
+PID    : 2180411
+I/O    : uncollated
+Case   : /home/asghar/OpenFOAM/TwoPhaseFlow-fork-v2212/run/growingDroplet/flowDroplet
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Overriding OptimisationSwitches according to controlDict
+    fileHandler (unregistered)
+    maxThreadFileBufferSize 2e+09;
+
+    maxMasterFileBufferSize 2e+09;
+
+Overriding fileHandler to collated
+I/O    : collated [threaded] (maxThreadFileBufferSize = 2e+09).
+         Requires buffer large enough to collect all data or thread support
+         enabled in MPI. If MPI thread support cannot be enabled, deactivate
+         threading by setting maxThreadFileBufferSize to 0 in
+         OpenFOAM etc/controlDict
+Create mesh for time = 0
+
+Check mesh...
+
+Time = 0
+
+Mesh stats 
+    points:           2756
+    internal points:  0
+    faces:            5277
+    internal faces:   2523
+    cells:            1300
+    faces per cell:   6
+    boundary patches: 6
+    point zones:      0
+    face zones:       0
+    cell zones:       0
+
+Overall number of cells of each type:
+    hexahedra:     1300
+    prisms:        0
+    wedges:        0
+    pyramids:      0
+    tet wedges:    0
+    tetrahedra:    0
+    polyhedra:     0
+
+Checking topology...
+    Boundary definition OK.
+    Cell to face addressing OK.
+    Point usage OK.
+    Upper triangular ordering OK.
+    Face vertices OK.
+    Number of regions: 1 (OK).
+
+Checking patch topology for multiply connected surfaces...
+    Patch               Faces    Points     Surface topology
+    front               1300     1378     ok (non-closed singly connected)  
+    back                1300     1378     ok (non-closed singly connected)  
+    left                25       52       ok (non-closed singly connected)  
+    right               25       52       ok (non-closed singly connected)  
+    top                 52       106      ok (non-closed singly connected)  
+    bottomRemainder     52       106      ok (non-closed singly connected)  
+    ".*"                2754     2756     ok (closed singly connected)      
+
+
+Checking faceZone topology for multiply connected surfaces...
+    No faceZones found.
+
+Checking basic cellZone addressing...
+    No cellZones found.
+
+Checking basic pointZone addressing...
+    No pointZones found.
+
+Checking geometry...
+    Overall domain bounding box (0 0 0) (0.005 9.6153846153846e-05 0.0025)
+    Mesh has 2 geometric (non-empty/wedge) directions (1 0 1)
+    Mesh has 2 solution (non-empty) directions (1 0 1)
+    All edges aligned with or perpendicular to non-empty directions.
+    Boundary openness (-2.6902921449725e-18 4.9857369939701e-15 1.6204317803439e-17) OK.
+    Max cell openness = 8.9467855053779e-17 OK.
+    Max aspect ratio = 1.0400000000005 OK.
+    Minimum face area = 9.245562130173e-09. Maximum face area = 9.6153846153901e-09.  Face area magnitudes OK.
+    Min volume = 9.245562130173e-13. Max volume = 9.2455621301827e-13.  Total volume = 1.2019230769231e-09.  Cell volumes OK.
+    Mesh non-orthogonality Max: 0 average: 0
+    Non-orthogonality check OK.
+    Face pyramids OK.
+    Max skewness = 5.4123372450501e-14 OK.
+    Coupled point location match (average 0) OK.
+
+Mesh OK.
+
+End
+

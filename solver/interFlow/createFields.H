@@ -40,7 +40,23 @@ volScalarField& alpha2(mixture.alpha2());
 const dimensionedScalar& rho1 = mixture.rho1();
 const dimensionedScalar& rho2 = mixture.rho2();
 
+// Info << "Field created " << nl;
+// // Need to store alpha0 for pinning
+volScalarField alpha0
+(
+    IOobject
+    (
+        "alpha0",
+        "0",
+        mesh,
+        IOobject::NO_READ,
+        runTime.timeName() == "0" ? IOobject::AUTO_WRITE : IOobject::NO_WRITE // Write only for time 0
+    ),
+    alpha1
+);
+alpha0.write();
 
+// Info << "Field created " << nl;
 // Need to store rho for ddt(rho, U)
 volScalarField rho
 (

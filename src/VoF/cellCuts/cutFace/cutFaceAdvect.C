@@ -186,16 +186,17 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
 
 Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
 (
-    const label faceI,
-    const vector& x0,
-    const vector& n0, // has to has the length of 1
-    const scalar Un0,
+    const label faceI, // patch face local or global? probably local
+    const vector& x0, // plic centre centre
+    const vector& n0, // has to has the length of 1 // interface normal
+    const scalar Un0, // plic interpolated velocity -> interpolate this on the face centre? or the same velocity to be used at plic and face centre
     const scalar dt,
     const scalar phi,
     const scalar magSf
 )
 {
     clearStorage();
+    Info<< " Inside the cutFaceAdvect.C " << nl;
 
 /* Temporarily taken out
     // Treating rare cases where isoface normal is not calculated properly
@@ -227,7 +228,108 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
     const face& f = mesh_.faces()[faceI];
     const label nPoints = f.size();
 
-    if (mag(Un0) > 1e-12) // Note: tolerances
+    bool insideHysteresis = false;
+    bool isAContactLine = false;
+    const auto & patches = mesh_.boundary();
+    const auto & boundaryMesh = mesh_.boundaryMesh();
+    const auto & faceOwner = mesh_.faceOwner();
+    //auto& abf = const_cast<GeometricField<fvPatchScalarField>&>(alpha1_.boundaryField());
+    auto& abf = const_cast<Foam::GeometricBoundaryField<Foam::scalar, Foam::fvPatchField, Foam::volMesh>&>(alpha1_.boundaryField());
+
+    label patchID = 0;
+    label  gIdFacei = 0;
+    label faceLId = 0; // face local id
+
+    if (!mesh_.isInternalFace(faceI))
+    {
+        const label cellID = faceOwner[faceI]; 
+        
+        forAll(patches, patchi)
+        {
+            const word & patchName = patches[patchi].name(); // Boundary patch name
+            if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
+            {
+                //Info << " Patch start " <<  boundaryMesh[patchi].start() << nl;
+                patchID = boundaryMesh.findPatchID(patchName);
+                forAll(patches[patchi], facei) 
+                {
+                    isAContactLine = false;
+                    // global ID of the patch facei
+                    gIdFacei = boundaryMesh[patchi].start() + facei;
+                    if (faceI == gIdFacei)
+                    {
+                        faceLId = facei;
+                        const auto& meshPoints = mesh_.points();
+                        const auto& meshFaces = mesh_.faces();
+                        const auto& thisFace = meshFaces[faceI ];
+                        //Info << " This face " << thisFace << nl;
+                        // Get face points. 
+                        for(auto pointI = 0; pointI < (thisFace.size() - 1); ++pointI)
+                        {
+                            // Compute the signed distance of the first point.
+                            const point& firstFacePoint = meshPoints[thisFace[pointI]];
+                            const scalar firstDist = (firstFacePoint - x0) &  n0;
+
+                            // Compute the signed distance of the second point.
+                            const point& secondFacePoint = meshPoints[thisFace[pointI + 1]];
+                            const scalar secondDist = (secondFacePoint - x0) &  n0;
+
+                            if ((firstDist * secondDist) < 0)
+                            {
+                                isAContactLine = true;
+                                if (isAContactLine)
+                                {
+                                    
+                                    const vectorField nf(patches[patchi].nf()); 
+                                    scalar thetaA = 110;
+                                    scalar thetaR = 60;
+                                    scalar contactAngle = acos(((-1*n0) & nf[facei]) / (mag((-1*n0)) * mag(nf[facei]))) * 180/M_PI;
+                                    //Info << "Theta i" << contactAngle << nl;
+                                    if((contactAngle < thetaA) && (contactAngle > thetaR))
+                                    {
+                                       // Info << nl << " I am a CL hysteresis " << " and cellID " << cellID << nl;
+                                        insideHysteresis = true;
+                                        //Info << "Theta insisde hysteresis " << contactAngle << nl;
+                                        //Info << " normal " << (-1*n0) << nl;
+                                        //Info << " alpha boundary face value " << abf[patchi][facei] << nl;
+                                        //Info << " facei " << facei << " faceI " << faceI << " patchid " << patchID << nl;
+
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (isAContactLine) break;
+                }
+            }
+            if(isAContactLine) break;
+        }
+    }
+
+
+    //################# CODE here #############//
+    if (insideHysteresis)
+    {
+        // Un0 is almost zero and isoFace is treated as stationary
+        calcSubFace(faceI, -n0, x0);
+        const scalar alphaf = mag(subFaceArea() / magSf);
+
+        if (debug)
+        {
+            WarningInFunction
+                << "Un0 is almost zero (" << Un0
+                << ") - calculating dVf on face " << faceI
+                << " using subFaceFraction giving alphaf = " << alphaf
+                << endl;
+        }
+
+        return phi * dt * alphaf;
+    }
+
+    //########################### ################## //
+
+    else if (!insideHysteresis && mag(Un0) > 1e-12) // Note: tolerances
     {
         // Here we estimate time of arrival to the face points from their normal
         // distance to the initial surface and the surface normal velocity

@@ -326,17 +326,17 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
             if (phiP >= 0)
             {
                 const scalar magSf = magSfb[patchi][patchFacei];
-
-                dVfb[patchi][patchFacei] = advectFace_.timeIntegratedFaceFlux
-                (
-                    facei,
-                    bsx0_[i],
-                    bsn0_[i],
-                    bsUn0_[i],
-                    dt,
-                    phiP,
-                    magSf
-                );
+                dVfb[patchi][patchFacei]  = 0.0;
+                // dVfb[patchi][patchFacei] = advectFace_.timeIntegratedFaceFlux
+                // (
+                //     facei,
+                //     bsx0_[i],
+                //     bsn0_[i],
+                //     bsUn0_[i],
+                //     dt,
+                //     phiP,
+                //     magSf
+                // );
 
                 // Check if the face is on processor patch and append it to
                 // the list if necessary

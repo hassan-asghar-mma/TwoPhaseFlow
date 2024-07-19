@@ -281,6 +281,67 @@ fdtDynamicAlphaContactAnglePlic
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+std::vector<std::tuple<point,vector>> interpolatePLICNormals
+(
+    label faceI,
+    const volVectorField& interfaceCentre,
+    const volVectorField& interfaceNormal
+)
+{
+    const auto& mesh = interfaceCentre.mesh();
+    auto cellI = mesh.faceOwner()[faceI];
+    auto cCI = interfaceCentre[cellI];
+    auto nCI = interfaceNormal[cellI];
+
+    // TT: First, only try the face neighbour cells and see if this works
+    // reliably. If not, we may need also the edge and point neighbouring cells
+    const auto& cellToCell = mesh.cellCells();
+    const auto& cells = mesh.cells();
+    const auto& thisCell = cells[cellI];
+
+    for(auto cellK : cellToCell)
+    {
+        if (magSqr(interfaceNormal[cellK]) != 0.0)
+        {
+            // Get the face connecting cellI and cellK
+            label connectingFaceI = -1;
+            const auto& otherCell = cells[cellK];
+            for (auto thisFaceI : thisCell)
+            {
+                for (auto otherFaceK : otherCell)
+                {
+                    if (thisFaceI == otherFaceK)
+                    {
+                        connectingFaceI = thisFaceI;
+                        break;
+                    }
+                }
+
+                if (connectingFaceI != -1)
+                {
+                    break;
+                }
+            }
+
+            // Get the cell cuts of the face connecting cellI and cellK
+            cutFacePLIC cutFace(mesh);
+            label cutStatusI = cutFace.calcSubFace
+                (
+                    connectingFaceI,
+                    interfaceNormal[cellI],
+                    interfaceCentre[cellI]
+                );
+            label cutStatusK = cutFace.calcSubFace
+                (
+                    connectingFaceI,
+                    interfaceNormal[cellK],
+                    interfaceCentre[cellK]
+                );
+
+        }
+    }
+
+}
 
 Foam::tmp<Foam::scalarField>
 Foam::fdtDynamicAlphaContactAnglePlic::theta
@@ -421,6 +482,16 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
         if (mag(nHat[faceI]) > 0) //TODO(TM): && hasContactLine(faceI))
         {
             const label cellI = patch.faceCells()[faceI];
+
+            // Extrapolate PLIC normals to contact line by first interpolating to the PLIC from
+            // neighbours and then do the actual extrapolation
+            if (hasContactLine(faceI))
+            {
+                auto normalsAndPoints = interpolatePLICNormals(faceI, interfaceCentre, interfaceNormal);
+                auto contactLineNormal = extrapolatePLICNormals(faceI, normalsAndPoints);
+                auto contactAngle = radToDeg(Foam::acos(contactLineNormal & nf[faceI]));
+                Info<< "Contact angle difference between PLIC and extrapolated normal: " << thetaf[faceI] - contactAngle << endl;
+            }
 
             // Visualize current PLIC contact angle as a cell-centered value.
             contactLineAngle_[cellI] = thetaf[faceI];

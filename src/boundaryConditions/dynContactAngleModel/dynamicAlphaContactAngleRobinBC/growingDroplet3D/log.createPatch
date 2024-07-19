@@ -1,0 +1,78 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 1d8f0d55f7-20231221 OPENFOAM=2312 version=v2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : createPatch -overwrite
+Date   : Jul 04 2024
+Time   : 17:31:19
+Host   : mma110629
+PID    : 3452596
+I/O    : uncollated
+Case   : /home/asghar/OpenFOAM/TwoPhaseFlow-fork-v2212/src/boundaryConditions/dynContactAngleModel/dynamicAlphaContactAngleRobinBC/growingDroplet3D
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Overriding OptimisationSwitches according to controlDict
+    fileHandler (unregistered)
+    maxThreadFileBufferSize 2e+09;
+
+    maxMasterFileBufferSize 2e+09;
+
+Overriding fileHandler to collated
+I/O    : collated [threaded] (maxThreadFileBufferSize = 2e+09).
+         Requires buffer large enough to collect all data or thread support
+         enabled in MPI. If MPI thread support cannot be enabled, deactivate
+         threading by setting maxThreadFileBufferSize to 0 in
+         OpenFOAM etc/controlDict
+Create mesh for time = 0
+
+Reading "system/createPatchDict"
+
+
+
+Adding patches to mesh region0
+
+Adding new patch inlet from 
+{
+    type            patch;
+    nFaces          0;
+    startFace       0;
+}
+
+Adding new patch bottomRemainder from 
+{
+    type            patch;
+    nFaces          0;
+    startFace       0;
+}
+
+
+
+
+Repatching mesh region0
+
+Read 16 faces from faceSet inletFaces
+Read 9984 faces from faceSet bottomRemainder
+Doing topology modification to order faces.
+
+Not synchronising points.
+
+Removing patches with no faces in them.
+
+Removed zero-sized patch bottom type patch at position 5
+
+
+Writing repatched mesh region0 to 0
+
+End
+

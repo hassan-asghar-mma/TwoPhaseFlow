@@ -1,0 +1,34 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 1d8f0d55f7-20231221 OPENFOAM=2312 version=v2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : setAlphaField
+Date   : Jul 10 2024
+Time   : 13:41:18
+Host   : mma110629
+PID    : 265196
+I/O    : uncollated
+Case   : /home/asghar/OpenFOAM/TwoPhaseFlow-fork-v2212/src/boundaryConditions/dynContactAngleModel/robinBC/hetro2D_25_wg
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Reading setAlphaFieldDict
+Reading field alpha.water_glycerol
+
+Writing new alpha field alpha.water_glycerol
+sum(alpha*V):9.8042383086956e-09, 1-max(alpha1): 0 min(alpha1): 0
+
+End
+

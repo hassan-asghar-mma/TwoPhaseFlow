@@ -188,6 +188,7 @@ void Foam::advection::isoAdvection::extendMarkedCells
 
 void Foam::advection::isoAdvection::timeIntegratedFlux()
 {
+    Info << "\n Entering the timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
     // Get time step
     addProfilingInFunction(geometricVoF);
     const scalar dt = mesh_.time().deltaTValue();
@@ -310,108 +311,174 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
     surfaceScalarField::Boundary& dVfb = dVf_.boundaryFieldRef();
     const label nInternalFaces = mesh_.nInternalFaces();
 
+    bool onceInsideHysteresis = false;
+    
     // Loop through boundary surface faces
     forAll(bsFaces_, i)
     {
         // Get boundary face index (in the global list)
         const label facei = bsFaces_[i];
-        const label patchi = boundaryMesh.patchID()[facei - nInternalFaces];
-        const label start = boundaryMesh[patchi].start();
-
-            //Check if the face belongs to a patch
-        bool isRobinBCFace = false;
+        const label patchID = boundaryMesh.patchID()[facei - nInternalFaces];
+        const word & patchName = boundaryMesh[patchID].name();
+        const label start = boundaryMesh[patchID].start();
         bool isAContactLine = false;
         bool insideHysteresis = false;
-        const auto & patches = mesh_.boundary();
-        const auto & boundaryMesh = mesh_.boundaryMesh();
-        const auto & faceOwner = mesh_.faceOwner();
-        auto& abf = alpha1_.boundaryField();
-        label patchID = 0;
-        label  gIdFacei = 0;
-        label faceLId = 0; // face local id
-        if (!mesh_.isInternalFace(facei))
+
+        if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
         {
-            const label cellID = faceOwner[facei]; 
-            
-            forAll(patches, patchi)
+            Info << " Entered the patch " << patchName << nl;
+            const label localFace = facei - boundaryMesh[patchID].start(); // local index of (global)facei
+
+            //check if contact line at face
+            Info << "inside the loop to check the contact line " << localFace << nl;                   
+            const auto& meshPoints = mesh_.points();
+            const auto& meshFaces = mesh_.faces();
+            const auto& thisFace = meshFaces[facei];
+
+            // Get face points. 
+            for(auto pointI = 0; pointI < (thisFace.size() - 1); ++pointI)
             {
-                const word & patchName = patches[patchi].name(); // Boundary patch name
-                if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
+                // Compute the signed distance of the first point.
+                const point& firstFacePoint = meshPoints[thisFace[pointI]];
+                const scalar firstDist = (firstFacePoint - bsx0_[i]) &  bsn0_[i];
+
+                // Compute the signed distance of the second point.
+                const point& secondFacePoint = meshPoints[thisFace[pointI + 1]];
+                const scalar secondDist = (secondFacePoint - bsx0_[i]) &  bsn0_[i];
+
+                if (firstDist * secondDist < 0)
                 {
-                    //Info << " Patch start " <<  boundaryMesh[patchi].start() << nl;
-                    patchID = boundaryMesh.findPatchID(patchName);
-                    forAll(patches[patchi], facei) 
-                    {
-                        isAContactLine = false;
-                        // global ID of the patch facei
-                        gIdFacei = boundaryMesh[patchi].start() + facei;
-                        if (facei == gIdFacei)
-                        {
-                            faceLId = facei;
-                            const auto& meshPoints = mesh_.points();
-                            const auto& meshFaces = mesh_.faces();
-                            const auto& thisFace = meshFaces[facei ];
-                            //Info << " This face " << thisFace << nl;
-                            // Get face points. 
-                            for(auto pointI = 0; pointI < (thisFace.size() - 1); ++pointI)
-                            {
-                                // Compute the signed distance of the first point.
-                                const point& firstFacePoint = meshPoints[thisFace[pointI]];
-                                const scalar firstDist = (firstFacePoint - bsx0_[i]) &  bsn0_[i];
-
-                                // Compute the signed distance of the second point.
-                                const point& secondFacePoint = meshPoints[thisFace[pointI + 1]];
-                                const scalar secondDist = (secondFacePoint - bsx0_[i]) &  bsn0_[i];
-
-                                if ((firstDist * secondDist) < 0)
-                                {
-                                    isAContactLine = true;
-                                    if (isAContactLine)
-                                    {
-                                        
-                                        const vectorField nf(patches[patchi].nf()); 
-                                        scalar thetaA = 110;
-                                        scalar thetaR = 60;
-                                        scalar contactAngle = acos(((-1*bsn0_[i]) & nf[facei]) / (mag((-1*bsn0_[i])) * mag(nf[facei]))) * 180/M_PI;
-                                        Info << "Theta in isoAdvection" << contactAngle << nl;
-                                        if((contactAngle < thetaA) && (contactAngle > thetaR))
-                                        {
-                                        // Info << nl << " I am a CL hysteresis " << " and cellID " << cellID << nl;
-                                            insideHysteresis = true;
-                                            //Info << "Theta insisde hysteresis " << contactAngle << nl;
-                                            //Info << " normal " << (-1*n0) << nl;
-                                            //Info << " alpha boundary face value " << abf[patchi][facei] << nl;
-                                            //Info << " facei " << facei << " faceI " << faceI << " patchid " << patchID << nl;
-
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        if (isAContactLine) break;
-                    }
+                    Info << "Contact line is present for face " << localFace<< nl;
+                    isAContactLine = true;
                 }
-                if(isAContactLine) break;
+            }
+        }
+        if (isAContactLine)
+        {    
+            const label localFace = facei - boundaryMesh[patchID].start(); // local index of (global)facei
+            const fvPatch& patch = mesh_.boundary()[patchID];
+            const vectorField& nf = patch.nf();
+            scalar thetaA = 110;
+            scalar thetaR = 60;
+            scalar contactAngle = acos(((-1*bsn0_[i]) & nf[localFace]) / (mag((-1*bsn0_[i])) * mag(nf[localFace]))) * 180/M_PI;
+            //Info << "Theta i" << contactAngle << nl;
+            if((contactAngle < thetaA) && (contactAngle > thetaR))
+            {
+                //Info << nl << "in isoAdvection:  I am a CL hysteresis " << " and cellID " << cellID << nl;
+                insideHysteresis = true;
+                onceInsideHysteresis = true;
+                Info << "isoAdvection.c Theta insisde hysteresis " << contactAngle << nl;
+                //Info << " normal " << (-1*n0) << nl;
+                //Info << " alpha boundary face value " << abf[patchi][facei] << nl;
+                //Info << " facei " << facei << " faceI " << faceI << " patchid " << patchID << nl;
+
             }
         }
 
-        if (phib[patchi].size())
+            //Check if the face belongs to a patch
+        // bool isRobinBCFace = false;
+        // bool isAContactLine = false;
+        // bool insideHysteresis = false;
+        // const auto & patches = mesh_.boundary();
+        // const auto & boundaryMesh = mesh_.boundaryMesh();
+        // const auto & faceOwner = mesh_.faceOwner();
+        // auto& abf = alpha1_.boundaryField();
+        // label patchID = 0;
+        // label  gIdFacei = 0;
+        // label faceLId = 0; // face local id
+        // if (!mesh_.isInternalFace(facei))
+        // {
+        //     Info << "\n Entering the mesh_.isInternalFace(facei) looo  inside timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
+        //     const label cellID = faceOwner[facei]; 
+            
+        //     forAll(patches, patchi)
+        //     {
+        //         const word & patchName = patches[patchi].name(); // Boundary patch name
+        //         if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
+        //         {
+        //             Info << " Entered the patch " << patchName << nl;
+        //             //Info << " Patch start " <<  boundaryMesh[patchi].start() << nl;
+        //             patchID = boundaryMesh.findPatchID(patchName);
+        //             forAll(patches[patchi], faceI) 
+        //             {
+        //                 isAContactLine = false;
+        //                 // global ID of the patch facei
+        //                 gIdFacei = boundaryMesh[patchi].start() + faceI;
+        //                 Info << " gId: " << gIdFacei << " facei " << facei << nl;
+        //                 if (facei == gIdFacei)
+        //                 {
+        //                     Info << "inside the loop to check the contact line " << facei << nl;                            faceLId = facei;
+        //                     const auto& meshPoints = mesh_.points();
+        //                     const auto& meshFaces = mesh_.faces();
+        //                     const auto& thisFace = meshFaces[facei ];
+        //                     //Info << " This face " << thisFace << nl;
+        //                     // Get face points. 
+        //                     for(auto pointI = 0; pointI < (thisFace.size() - 1); ++pointI)
+        //                     {
+        //                         // Compute the signed distance of the first point.
+        //                         const point& firstFacePoint = meshPoints[thisFace[pointI]];
+        //                         const scalar firstDist = (firstFacePoint - bsx0_[i]) &  bsn0_[i];
+
+        //                         // Compute the signed distance of the second point.
+        //                         const point& secondFacePoint = meshPoints[thisFace[pointI + 1]];
+        //                         const scalar secondDist = (secondFacePoint - bsx0_[i]) &  bsn0_[i];
+
+        //                         if ((firstDist * secondDist) < 0)
+        //                         {
+        //                             Info << "Contact line is present " << nl;
+        //                             isAContactLine = true;
+        //                             if (isAContactLine)
+        //                             {
+                                        
+        //                                 const vectorField nf(patches[patchi].nf()); 
+        //                                 scalar thetaA = 110;
+        //                                 scalar thetaR = 60;
+        //                                 scalar contactAngle = acos(((-1*bsn0_[i]) & nf[facei]) / (mag((-1*bsn0_[i])) * mag(nf[facei]))) * 180/M_PI;
+        //                                 Info << "\n Theta in isoAdvection" << contactAngle << nl;
+        //                                 if((contactAngle < thetaA) && (contactAngle > thetaR))
+        //                                 {
+        //                                 // Info << nl << " I am a CL hysteresis " << " and cellID " << cellID << nl;
+        //                                     insideHysteresis = true;
+        //                                     onceInsideHysteresis = true;
+        //                                     Info << insideHysteresis << "  and " << onceInsideHysteresis << " for cell " << cellID<< nl;
+        //                                     //Info << "Theta insisde hysteresis " << contactAngle << nl;
+        //                                     //Info << " normal " << (-1*n0) << nl;
+        //                                     //Info << " alpha boundary face value " << abf[patchi][facei] << nl;
+        //                                     //Info << " facei " << facei << " faceI " << faceI << " patchid " << patchID << nl;
+
+        //                                 }
+        //                             }
+        //                             break;
+        //                         }
+        //                     }
+        //                 }
+        //                 if (isAContactLine) break;
+        //             }
+        //         }
+        //         if(isAContactLine) break;
+        //     }
+        // }
+        Info << "\n Left the mesh_.isInternalFace(facei) looo  inside timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
+
+        if (phib[patchID].size())
         {
+            Info << "\n Entering the phib[patchi].size() loop  inside timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
+
             const label patchFacei = facei - start;
-            const scalar phiP = phib[patchi][patchFacei];
-            if (insideHysteresis)
-            {
-                Info << " Inside iso hysteresis " << nl;
-                phib[patchi][patchFacei] *=scalar(0);
-            }
+            const scalar phiP = phib[patchID][patchFacei];
+            // if (insideHysteresis)
+            // {
+            //     ///Info << " Inside iso hysteresis " << nl;
+            //     phib[patchi][patchFacei] *=scalar(0);
+            // }
 
-            else if (phiP >= 0)
+            if (phiP >= 0)
             {
-                Info << " Inside Phip> 0" <<nl;
-                const scalar magSf = magSfb[patchi][patchFacei];
+                //Info << " Inside Phip> 0" <<nl;
+                const scalar magSf = magSfb[patchID][patchFacei];
+                Info << "\n Calling the timeIntegratedFaceFlux function  inside timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
 
-                dVfb[patchi][patchFacei] = advectFace_.timeIntegratedFaceFlux
+                dVfb[patchID][patchFacei] = advectFace_.timeIntegratedFaceFlux
                 (
                     facei,
                     bsx0_[i],
@@ -426,14 +493,23 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
                 // the list if necessary
                 checkIfOnProcPatch(facei);
             }
+            Info << "\n Leaving the phib[patchID].size() loop  inside timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
+
         }
     }
-
+    if(onceInsideHysteresis)
+    {
+        Info << "\n Writing the alphaField \n";
+        Info << " /////////////////////////////////////////////////// \n \n";
+        alpha1_.write();
+    }
     // Synchronize processor patches
     syncProcPatches(dVf_, phi_);
 
     DebugInfo << "Number of isoAdvector surface cells = "
         << returnReduce(nSurfaceCells, sumOp<label>()) << endl;
+
+    Info << "\n Leaving the timeIntegratedFlux function isoAdvection.C\n %%%%%% \n";
 }
 
 

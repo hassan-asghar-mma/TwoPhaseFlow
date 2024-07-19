@@ -1,0 +1,63 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 1d8f0d55f7-20231221 OPENFOAM=2312 version=v2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : topoSet
+Date   : Jul 04 2024
+Time   : 17:31:17
+Host   : mma110629
+PID    : 3452591
+I/O    : uncollated
+Case   : /home/asghar/OpenFOAM/TwoPhaseFlow-fork-v2212/src/boundaryConditions/dynContactAngleModel/dynamicAlphaContactAngleRobinBC/growingDroplet3D
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Overriding OptimisationSwitches according to controlDict
+    fileHandler (unregistered)
+    maxThreadFileBufferSize 2e+09;
+
+    maxMasterFileBufferSize 2e+09;
+
+Overriding fileHandler to collated
+I/O    : collated [threaded] (maxThreadFileBufferSize = 2e+09).
+         Requires buffer large enough to collect all data or thread support
+         enabled in MPI. If MPI thread support cannot be enabled, deactivate
+         threading by setting maxThreadFileBufferSize to 0 in
+         OpenFOAM etc/controlDict
+Create polyMesh for time = 0
+
+Reading topoSetDict
+
+Time = 0
+    mesh not changed.
+Created faceSet inletFaces
+    Applying source patchToFace
+    Adding all faces of patches: (bottom) ...
+    Found matching patch bottom with 10000 faces
+    faceSet inletFaces now size 10000
+Read set faceSet inletFaces size:10000
+    Applying source boxToFace
+    Adding faces with centre within boxes 1((0.0024 0.0024 -100) (0.0026 0.0026 100))
+    faceSet inletFaces now size 16
+Created faceSet bottomRemainder
+    Applying source patchToFace
+    Adding all faces of patches: (bottom) ...
+    Found matching patch bottom with 10000 faces
+    faceSet bottomRemainder now size 10000
+Read set faceSet bottomRemainder size:10000
+    Applying source faceToFace
+    Removing all elements of face sets: (inletFaces)
+    faceSet bottomRemainder now size 9984
+
+End
+

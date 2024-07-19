@@ -1,0 +1,5029 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2312                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 1d8f0d55f7-20231221 OPENFOAM=2312 version=v2312
+Arch   : "LSB;label=32;scalar=64"
+Exec   : interFlow
+Date   : Jul 10 2024
+Time   : 13:41:18
+Host   : mma110629
+PID    : 265197
+I/O    : uncollated
+Case   : /home/asghar/OpenFOAM/TwoPhaseFlow-fork-v2212/src/boundaryConditions/dynContactAngleModel/robinBC/hetro2D_25_wg
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Selecting dynamicFvMesh staticFvMesh
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p_rgh
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Reading transportProperties
+
+Selecting incompressible transport model Newtonian
+Selecting incompressible transport model Newtonian
+inside 0 
+inside 0 
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+Selecting surfaceTension model fitParaboloid
+Selecting surfaceTension model alphaCSF
+--> FOAM IOWarning :
+    Found [v1] 'accelerationModel' entry instead of 'accelerationForceModel' in dictionary "constant/transportProperties/surfaceForces"
+
+    This keyword is very old.
+
+Selecting surfaceTension model gravity
+No MRF models present
+
+No finite volume options present
+Selecting advectionSchemes: isoAdvection
+Selecting reconstructionScheme: plicRDF
+DICPCG:  Solving for pcorr, Initial residual = 0, Final residual = 0, No Iterations 0
+time step continuity errors : sum local = 0, global = 0, cumulative = 0
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Sampled surface:
+    isoAlpha -> vtk
+        isoSurface: isoAlpha : isoMethod:default regularise:full snap:1 field:alpha.water_glycerol value:(0.5)
+
+Duplicate entry isoAlpha in runtime table reconstructionSchemes
+[stack trace]
+=============
+#1	platforms/linux64GccDPInt32Opt/lib/libVoF.so Foam::reconstructionSchemes::addcomponentsConstructorToTable<Foam::reconstruction::isoAlpha>::addcomponentsConstructorToTable(Foam::word const&) [0x7f56122dad35]
+#2	platforms/linux64GccDPInt32Opt/lib/libgeometricVoF.so(+0x4a540) [0x7f560c674540]
+#3	/lib64/ld-linux-x86-64.so.2(+0x11b9a) [0x7f5615c45b9a]
+#4	/lib64/ld-linux-x86-64.so.2(+0x11ca1) [0x7f5615c45ca1]
+#5	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1ba5]
+#6	/lib64/ld-linux-x86-64.so.2(+0x1643d) [0x7f5615c4a43d]
+#7	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#8	/lib64/ld-linux-x86-64.so.2(+0x1560a) [0x7f5615c4960a]
+#9	/lib/x86_64-linux-gnu/libdl.so.2(+0x134c) [0x7f56113b534c]
+#10	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#11	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_error [0x7f5610fb1c13]
+#12	/lib/x86_64-linux-gnu/libdl.so.2(+0x1b59) [0x7f56113b5b59]
+#13	/lib/x86_64-linux-gnu/libdl.so.2 dlopen [0x7f56113b53da]
+#14	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, bool) [0x7f5611ea0cef]
+#15	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [0x7f5611ea15f3]
+#16	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::openLibrary(Foam::fileName const&, bool) [0x7f5611aebbcf]
+#17	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::open(Foam::fileName const&, bool) [0x7f5611aeceda]
+#18	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so bool Foam::dlLibraryTable::open<Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >*>(Foam::dictionary const&, Foam::word const&, Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >* const&, bool) [0x7f5611afbbc8]
+#19	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObject::New(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611afad5d]
+#20	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjects::timeControl::timeControl(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611b1477b]
+#21	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjectList::read() [0x7f5611b018e1]
+#22	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::Time::run() const [0x7f5611b265d7]
+#23	interFlow(+0x3da52) [0x559baa108a52]
+#24	/lib/x86_64-linux-gnu/libc.so.6 __libc_start_main [0x7f5610e75083]
+#25	interFlow(+0x43b0e) [0x559baa10eb0e]
+=============
+Duplicate entry gradAlpha in runtime table reconstructionSchemes
+[stack trace]
+=============
+#1	platforms/linux64GccDPInt32Opt/lib/libVoF.so Foam::reconstructionSchemes::addcomponentsConstructorToTable<Foam::reconstruction::gradAlpha>::addcomponentsConstructorToTable(Foam::word const&) [0x7f56122ea275]
+#2	platforms/linux64GccDPInt32Opt/lib/libgeometricVoF.so(+0x4a630) [0x7f560c674630]
+#3	/lib64/ld-linux-x86-64.so.2(+0x11b9a) [0x7f5615c45b9a]
+#4	/lib64/ld-linux-x86-64.so.2(+0x11ca1) [0x7f5615c45ca1]
+#5	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1ba5]
+#6	/lib64/ld-linux-x86-64.so.2(+0x1643d) [0x7f5615c4a43d]
+#7	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#8	/lib64/ld-linux-x86-64.so.2(+0x1560a) [0x7f5615c4960a]
+#9	/lib/x86_64-linux-gnu/libdl.so.2(+0x134c) [0x7f56113b534c]
+#10	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#11	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_error [0x7f5610fb1c13]
+#12	/lib/x86_64-linux-gnu/libdl.so.2(+0x1b59) [0x7f56113b5b59]
+#13	/lib/x86_64-linux-gnu/libdl.so.2 dlopen [0x7f56113b53da]
+#14	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, bool) [0x7f5611ea0cef]
+#15	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [0x7f5611ea15f3]
+#16	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::openLibrary(Foam::fileName const&, bool) [0x7f5611aebbcf]
+#17	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::open(Foam::fileName const&, bool) [0x7f5611aeceda]
+#18	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so bool Foam::dlLibraryTable::open<Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >*>(Foam::dictionary const&, Foam::word const&, Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >* const&, bool) [0x7f5611afbbc8]
+#19	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObject::New(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611afad5d]
+#20	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjects::timeControl::timeControl(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611b1477b]
+#21	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjectList::read() [0x7f5611b018e1]
+#22	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::Time::run() const [0x7f5611b265d7]
+#23	interFlow(+0x3da52) [0x559baa108a52]
+#24	/lib/x86_64-linux-gnu/libc.so.6 __libc_start_main [0x7f5610e75083]
+#25	interFlow(+0x43b0e) [0x559baa10eb0e]
+=============
+Duplicate entry plicRDF in runtime table reconstructionSchemes
+[stack trace]
+=============
+#1	platforms/linux64GccDPInt32Opt/lib/libVoF.so Foam::reconstructionSchemes::addcomponentsConstructorToTable<Foam::reconstruction::plicRDF>::addcomponentsConstructorToTable(Foam::word const&) [0x7f56122f93d5]
+#2	platforms/linux64GccDPInt32Opt/lib/libgeometricVoF.so(+0x4a720) [0x7f560c674720]
+#3	/lib64/ld-linux-x86-64.so.2(+0x11b9a) [0x7f5615c45b9a]
+#4	/lib64/ld-linux-x86-64.so.2(+0x11ca1) [0x7f5615c45ca1]
+#5	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1ba5]
+#6	/lib64/ld-linux-x86-64.so.2(+0x1643d) [0x7f5615c4a43d]
+#7	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#8	/lib64/ld-linux-x86-64.so.2(+0x1560a) [0x7f5615c4960a]
+#9	/lib/x86_64-linux-gnu/libdl.so.2(+0x134c) [0x7f56113b534c]
+#10	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#11	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_error [0x7f5610fb1c13]
+#12	/lib/x86_64-linux-gnu/libdl.so.2(+0x1b59) [0x7f56113b5b59]
+#13	/lib/x86_64-linux-gnu/libdl.so.2 dlopen [0x7f56113b53da]
+#14	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, bool) [0x7f5611ea0cef]
+#15	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [0x7f5611ea15f3]
+#16	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::openLibrary(Foam::fileName const&, bool) [0x7f5611aebbcf]
+#17	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::open(Foam::fileName const&, bool) [0x7f5611aeceda]
+#18	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so bool Foam::dlLibraryTable::open<Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >*>(Foam::dictionary const&, Foam::word const&, Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >* const&, bool) [0x7f5611afbbc8]
+#19	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObject::New(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611afad5d]
+#20	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjects::timeControl::timeControl(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611b1477b]
+#21	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjectList::read() [0x7f5611b018e1]
+#22	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::Time::run() const [0x7f5611b265d7]
+#23	interFlow(+0x3da52) [0x559baa108a52]
+#24	/lib/x86_64-linux-gnu/libc.so.6 __libc_start_main [0x7f5610e75083]
+#25	interFlow(+0x43b0e) [0x559baa10eb0e]
+=============
+Duplicate entry interface in runtime table sampledSurface
+[stack trace]
+=============
+#1	platforms/linux64GccDPInt32Opt/lib/libgeometricVoF.so Foam::sampledSurface::addwordConstructorToTable<Foam::sampledInterface>::addwordConstructorToTable(Foam::word const&) [0x7f560c70df65]
+#2	platforms/linux64GccDPInt32Opt/lib/libpostProcess.so(+0x6e270) [0x7f560c504270]
+#3	/lib64/ld-linux-x86-64.so.2(+0x11b9a) [0x7f5615c45b9a]
+#4	/lib64/ld-linux-x86-64.so.2(+0x11ca1) [0x7f5615c45ca1]
+#5	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1ba5]
+#6	/lib64/ld-linux-x86-64.so.2(+0x1643d) [0x7f5615c4a43d]
+#7	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#8	/lib64/ld-linux-x86-64.so.2(+0x1560a) [0x7f5615c4960a]
+#9	/lib/x86_64-linux-gnu/libdl.so.2(+0x134c) [0x7f56113b534c]
+#10	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_exception [0x7f5610fb1b48]
+#11	/lib/x86_64-linux-gnu/libc.so.6 _dl_catch_error [0x7f5610fb1c13]
+#12	/lib/x86_64-linux-gnu/libdl.so.2(+0x1b59) [0x7f56113b5b59]
+#13	/lib/x86_64-linux-gnu/libdl.so.2 dlopen [0x7f56113b53da]
+#14	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, bool) [0x7f5611ea0cef]
+#15	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlOpen(Foam::fileName const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) [0x7f5611ea15f3]
+#16	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::openLibrary(Foam::fileName const&, bool) [0x7f5611aebbcf]
+#17	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::dlLibraryTable::open(Foam::fileName const&, bool) [0x7f5611aeceda]
+#18	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so bool Foam::dlLibraryTable::open<Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >*>(Foam::dictionary const&, Foam::word const&, Foam::HashTable<Foam::autoPtr<Foam::functionObject> (*)(Foam::word const&, Foam::Time const&, Foam::dictionary const&), Foam::word, Foam::Hash<Foam::word> >* const&, bool) [0x7f5611afbbc8]
+#19	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObject::New(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611afad5d]
+#20	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjects::timeControl::timeControl(Foam::word const&, Foam::Time const&, Foam::dictionary const&) [0x7f5611b1477b]
+#21	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::functionObjectList::read() [0x7f5611b018e1]
+#22	platforms/linux64GccDPInt32Opt/lib/libOpenFOAM.so Foam::Time::run() const [0x7f5611b265d7]
+#23	interFlow(+0x3da52) [0x559baa108a52]
+#24	/lib/x86_64-linux-gnu/libc.so.6 __libc_start_main [0x7f5610e75083]
+#25	interFlow(+0x43b0e) [0x559baa10eb0e]
+=============
+Sampled surface:
+    freeSurf -> vtk
+        sampledInterface: freeSurf
+
+Courant Number mean: 0 max: 0
+Interface Courant Number mean: 0 max: 0
+Capillary Number: 6.2216312277952
+Time = 0.0001
+
+PIMPLE: iteration 1
+Inside hysteresis for face 149 with angle 88.960820764758
+before; Patch values : 
+ faceI : 149 alpha0: 0.99182376728619 alpha1 0.99182376728619
+after; Patch values : 
+ faceI : 149 alpha0: 0.99182376728619 alpha1 0.99182376728619
+Inside hysteresis for face 198 with angle 88.960354118442
+before; Patch values : 
+ faceI : 198 alpha0: 0.99182535617888 alpha1 0.99182535617888
+after; Patch values : 
+ faceI : 198 alpha0: 0.99182535617888 alpha1 0.99182535617888
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012109453416  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012109453416  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+GAMG:  Solving for p_rgh, Initial residual = 1, Final residual = 0.030418639363723, No Iterations 1
+time step continuity errors : sum local = 1.9398841228297e-05, global = 4.2975477676715e-07, cumulative = 4.2975477676715e-07
+GAMG:  Solving for p_rgh, Initial residual = 0.00084014795833306, Final residual = 3.4774242630657e-05, No Iterations 3
+time step continuity errors : sum local = 1.1556053653395e-06, global = 4.4137193342505e-07, cumulative = 8.711267101922e-07
+GAMG:  Solving for p_rgh, Initial residual = 9.7946243567235e-05, Final residual = 6.6805756969646e-10, No Iterations 18
+time step continuity errors : sum local = 5.8514287541175e-11, global = 2.3087704084245e-11, cumulative = 8.7114979789628e-07
+ExecutionTime = 0.75 s  ClockTime = 1 s
+
+Courant Number mean: 9.0295550702689e-05 max: 0.029362743598576
+Interface Courant Number mean: 6.2172764691471e-06 max: 0.014600581270569
+Capillary Number: 6.2216312277952
+Time = 0.0002
+
+PIMPLE: iteration 1
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.02801210945342  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 87.262488450553
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.0043853834216966
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 87.262530981051
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.0034961485090225
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 87.184380152008
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.0043853834216966
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 87.276289856196
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.0034961485090225
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012109453424  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 87.075968753233
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 87.175888496467
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.570672001473
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.865375793347
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.00063435350537713, Final residual = 1.1128772350678e-05, No Iterations 1
+time step continuity errors : sum local = 8.4370439686752e-07, global = -1.3960415423347e-07, cumulative = 7.3154564366281e-07
+GAMG:  Solving for p_rgh, Initial residual = 5.3332134580805e-05, Final residual = 2.6121504028243e-06, No Iterations 2
+time step continuity errors : sum local = 1.9777215399507e-07, global = -1.0377181525262e-07, cumulative = 6.2777382841019e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.2838333063405e-05, Final residual = 6.7348734675567e-10, No Iterations 14
+time step continuity errors : sum local = 4.9626076910521e-11, global = -1.9784166515387e-11, cumulative = 6.2775404424367e-07
+ExecutionTime = 1.07 s  ClockTime = 1 s
+
+Courant Number mean: 0.00016138752034716 max: 0.029576166277671
+Interface Courant Number mean: 7.8012358338978e-06 max: 0.02671254084218
+Capillary Number: 6.2217087661186
+Time = 0.0003
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 86.541589133085
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.807836102086
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.292331223851
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.681192865479
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.281204319154
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.640135045991
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.164584767527
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.014500648906052
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.602240179015
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.009972964116484
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012108131962  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 86.164356736603
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.020352508830184
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.569984005275
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.017659946155981
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.134622740623
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.020352508830184
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.455925575017
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.017659946155981
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.02801210812648  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.113459953367
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.420081383256
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.180682339797
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.319529388996
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.00055235132561871, Final residual = 8.6687384870144e-06, No Iterations 1
+time step continuity errors : sum local = 6.3881857831309e-07, global = 3.2210120021014e-08, cumulative = 6.5996416426469e-07
+GAMG:  Solving for p_rgh, Initial residual = 3.7786775866884e-05, Final residual = 1.3864417608855e-06, No Iterations 2
+time step continuity errors : sum local = 1.0148512947051e-07, global = 2.9240647206722e-08, cumulative = 6.8920481147141e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.1551294677529e-05, Final residual = 5.469698708142e-10, No Iterations 13
+time step continuity errors : sum local = 4.0431127587436e-11, global = -1.1502472286277e-11, cumulative = 6.8919330899912e-07
+ExecutionTime = 1.39 s  ClockTime = 2 s
+
+Courant Number mean: 0.00023732550297615 max: 0.031069583556847
+Interface Courant Number mean: 1.1443519187586e-05 max: 0.031069583556847
+Capillary Number: 6.2217087661186
+Time = 0.0004
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 86.175049143588
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.31488463485
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.207109136952
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.250598080353
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.206134221637
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.247692826084
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 86.221411783323
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.02619062649669
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.211930724393
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.025278025818162
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012106803781  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 86.219704513828
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.038672481385387
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 86.20765803669
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.036416748218238
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.855452036134
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.038672481385387
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.78196357408
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.036416748218238
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012105481082  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.840886070782
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.755389328661
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.283281994074
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.351372242474
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.00069813450990771, Final residual = 1.0553862735028e-05, No Iterations 1
+time step continuity errors : sum local = 7.807745740623e-07, global = -8.4891041358756e-10, cumulative = 6.8834439858553e-07
+GAMG:  Solving for p_rgh, Initial residual = 4.4902285412589e-05, Final residual = 1.7938939269196e-06, No Iterations 2
+time step continuity errors : sum local = 1.3440670260872e-07, global = 1.0355320430264e-08, cumulative = 6.986997190158e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.3778166140678e-05, Final residual = 8.0255887827005e-10, No Iterations 14
+time step continuity errors : sum local = 5.9536083012645e-11, global = -2.0064095859458e-12, cumulative = 6.9869771260621e-07
+ExecutionTime = 1.71 s  ClockTime = 2 s
+
+Courant Number mean: 0.00031621322415196 max: 0.047819621399894
+Interface Courant Number mean: 1.4677165595489e-05 max: 0.040882470329148
+Capillary Number: 6.2217087661186
+Time = 0.0005
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 85.277164521152
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.339976239983
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.983564639653
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.169147084603
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.986837132407
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.167959748065
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.828932986463
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.051154336274026
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.099918368932
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.047578012401343
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012104170919  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 84.837878205007
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.056580106410003
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.10356900529
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.056648845709782
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.015634493501
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.056580106410003
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.174398762773
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.056648845709782
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012102860756  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.996098635896
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.159268851967
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.462704669473
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.264196283116
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.00087016321668485, Final residual = 1.1970668006443e-05, No Iterations 1
+time step continuity errors : sum local = 8.8561601035003e-07, global = -8.9979194697011e-09, cumulative = 6.8969979313651e-07
+GAMG:  Solving for p_rgh, Initial residual = 5.7280609791735e-05, Final residual = 2.3527782405721e-06, No Iterations 2
+time step continuity errors : sum local = 1.7037440173194e-07, global = -1.503785274713e-08, cumulative = 6.7466194038938e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.6757438375529e-05, Final residual = 7.2697104467074e-10, No Iterations 14
+time step continuity errors : sum local = 5.3422928419958e-11, global = -2.0001845303202e-11, cumulative = 6.7464193854408e-07
+ExecutionTime = 2.08 s  ClockTime = 2 s
+
+Courant Number mean: 0.00039145222650179 max: 0.048115535166832
+Interface Courant Number mean: 1.7525170761542e-05 max: 0.048115535166832
+Capillary Number: 6.2217087661186
+Time = 0.0006
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 85.425677594997
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.238107418539
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.559550357959
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.24171967668
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.496819747196
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.20445705547
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.572629264039
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.062082223954267
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.217726543016
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.065763708409749
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012101542958  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 85.508538163439
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.079623195518892
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 85.180576764856
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.080033598178295
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.711017831691
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.079623195518892
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.894693419928
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.080033598178295
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012100225161  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.689561887518
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.875100238708
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.560324292366
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.449924043571
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.00097301764429853, Final residual = 1.7232145440318e-05, No Iterations 1
+time step continuity errors : sum local = 1.268361987342e-06, global = 1.7576882596738e-08, cumulative = 6.9221882114082e-07
+GAMG:  Solving for p_rgh, Initial residual = 6.4721600162791e-05, Final residual = 1.9640308319041e-06, No Iterations 3
+time step continuity errors : sum local = 1.4979962924612e-07, global = 3.8660278439594e-08, cumulative = 7.3087909958041e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.9932578679424e-05, Final residual = 5.4052420925292e-10, No Iterations 15
+time step continuity errors : sum local = 4.0265290041781e-11, global = 2.4493465119551e-12, cumulative = 7.3088154892692e-07
+ExecutionTime = 2.42 s  ClockTime = 3 s
+
+Courant Number mean: 0.00047380391648472 max: 0.078379683766084
+Interface Courant Number mean: 2.078201405449e-05 max: 0.063581489010618
+Capillary Number: 6.2217087661186
+Time = 0.0007
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 83.619915363342
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.442701863816
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.186016612138
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.272146817271
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.286979293748
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.272664553431
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.064834017559
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.097084442652401
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.204439600117
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.094330502364317
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012098924625  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 83.178722011283
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10183944462083
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.208509814878
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.10563137868197
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.086205996511
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10183944462083
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.353275055274
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.10563137868197
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012097624088  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.066743775034
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.338636934329
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.859548785689
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.646434119642
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.0010941189100707, Final residual = 1.8067419848282e-05, No Iterations 1
+time step continuity errors : sum local = 1.3501103348725e-06, global = -1.9615527565872e-08, cumulative = 7.1126602136105e-07
+GAMG:  Solving for p_rgh, Initial residual = 0.00010034207917382, Final residual = 3.5400160609248e-06, No Iterations 2
+time step continuity errors : sum local = 2.5492294558172e-07, global = -3.2415463255833e-08, cumulative = 6.7885055810522e-07
+GAMG:  Solving for p_rgh, Initial residual = 2.5309377869078e-05, Final residual = 6.1686210020458e-10, No Iterations 15
+time step continuity errors : sum local = 4.5460361231974e-11, global = -1.5693002513201e-11, cumulative = 6.788348651027e-07
+ExecutionTime = 2.78 s  ClockTime = 3 s
+
+Courant Number mean: 0.0005536185664258 max: 0.077686374454668
+Interface Courant Number mean: 2.5645383549599e-05 max: 0.071796028046996
+Capillary Number: 6.2217087661186
+Time = 0.0008
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 84.842253678866
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.619323658786
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.149787524216
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.73752203696
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.112561539678
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.695707673791
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 85.253225927888
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.10657319099955
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.762045251447
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.11699757396464
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 2.2204460492503e-16
+Phase-1 volume fraction = 0.028012096314514  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 85.2146003946
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.12768897973256
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.719102338413
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.13316474369654
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.291460159386
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.12768897973256
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.292689681876
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.13316474369654
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 2.2204460492503e-16
+Phase-1 volume fraction = 0.02801209500494  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 84.269856085129
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 84.273335193748
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.817507882283
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.680656620578
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.0012420901787038, Final residual = 2.0941823818024e-05, No Iterations 1
+time step continuity errors : sum local = 1.5478742096481e-06, global = 2.0822380309246e-08, cumulative = 6.9965724541195e-07
+GAMG:  Solving for p_rgh, Initial residual = 0.00010198682505008, Final residual = 4.4175568402917e-06, No Iterations 2
+time step continuity errors : sum local = 3.3908946396561e-07, global = 4.6302538437235e-08, cumulative = 7.4595978384918e-07
+GAMG:  Solving for p_rgh, Initial residual = 2.7129083320942e-05, Final residual = 8.414241641014e-10, No Iterations 15
+time step continuity errors : sum local = 6.289514592215e-11, global = 1.0595613645706e-11, cumulative = 7.4597037946283e-07
+ExecutionTime = 3.12 s  ClockTime = 3 s
+
+Courant Number mean: 0.00063363453576169 max: 0.086984259968222
+Interface Courant Number mean: 2.8446070528759e-05 max: 0.086984259968222
+Capillary Number: 6.2217087661186
+Time = 0.0009
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 82.872542854683
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.678462268968
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.336268346286
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.467458845545
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.434308573399
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.474638094311
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.180399129799
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.14858479168968
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.395325994967
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.14935796026199
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 2.2204460492503e-16
+Phase-1 volume fraction = 0.028012093711745  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 82.291529624508
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.15485170611353
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.405862889451
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.16087459982156
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.906061797246
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.15485170611353
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.535196994768
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.16087459982156
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 2.2204460492503e-16
+Phase-1 volume fraction = 0.028012092418549  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.911063344911
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.528769119069
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.600768594705
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.621337281178
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.0013809283808115, Final residual = 2.2389152657511e-05, No Iterations 1
+time step continuity errors : sum local = 1.6661210719453e-06, global = -1.9719005514691e-08, cumulative = 7.2625137394814e-07
+GAMG:  Solving for p_rgh, Initial residual = 0.000126117345804, Final residual = 4.3250360939058e-06, No Iterations 2
+time step continuity errors : sum local = 3.1132600732563e-07, global = -3.5986428095769e-08, cumulative = 6.9026494585237e-07
+GAMG:  Solving for p_rgh, Initial residual = 3.3581473943192e-05, Final residual = 7.7060890093247e-10, No Iterations 15
+time step continuity errors : sum local = 5.7402025974064e-11, global = -2.1472481234484e-11, cumulative = 6.9024347337114e-07
+ExecutionTime = 3.46 s  ClockTime = 4 s
+
+Courant Number mean: 0.00071489969336421 max: 0.1018755584703
+Interface Courant Number mean: 3.183845966713e-05 max: 0.091460406001646
+Capillary Number: 6.2217087661186
+Time = 0.001
+
+PIMPLE: iteration 1
+Inside hysteresis for face 148 with angle 83.570287395256
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.607037038392
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.814031935901
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.626130369576
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.754386618643
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.604528993423
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.875903698016
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.16110044025468
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.621315754251
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.17245124616349
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012091110375  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 83.813484958909
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.17758322131361
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.599476194154
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.1876827327216
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.209425705652
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.17758322131361
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.499002280673
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.1876827327216
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+ Inside the cutFaceAdvect.C 
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 0
+Phase-1 volume fraction = 0.028012089802202  Min(alpha.water_glycerol) = 0  Max(alpha.water_glycerol) = 1
+Inside hysteresis for face 148 with angle 90
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.19392069839177
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 90
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.20295543301472
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 83.195543598834
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.19392069839177
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.489421572498
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.20295543301472
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+Inside hysteresis for face 148 with angle 82.474590834414
+before; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 0.19392069839177
+after; Patch values : 
+ faceI : 148 alpha0: 1.3306518662254e-17 alpha1 1.3306518662254e-17
+Inside hysteresis for face 199 with angle 83.370771726823
+before; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 0.20295543301472
+after; Patch values : 
+ faceI : 199 alpha0: 1.3306495214089e-17 alpha1 1.3306495214089e-17
+GAMG:  Solving for p_rgh, Initial residual = 0.0015799554219084, Final residual = 2.3072755542868e-05, No Iterations 1
+time step continuity errors : sum local = 1.7265229521768e-06, global = 1.9220952823334e-08, cumulative = 7.0946442619447e-07
+GAMG:  Solving for p_rgh, Initial residual = 0.0001211285873173, Final residual = 4.9717340869515e-06, No Iterations 2
+time step continuity errors : sum local = 3.7996110605055e-07, global = 4.165340914945e-08, cumulative = 7.5111783534392e-07
+GAMG:  Solving for p_rgh, Initial residual = 3.092028169515e-05, Final residual = 9.6863302233617e-10, No Iterations 15
+time step continuity errors : sum local = 7.1255131965276e-11, global = 1.4157426290522e-11, cumulative = 7.5113199277021e-07
+ExecutionTime = 3.79 s  ClockTime = 4 s
+
+End
+
+corrupted size vs. prev_size in fastbins
+Aborted

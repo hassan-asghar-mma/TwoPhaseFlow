@@ -442,8 +442,8 @@ Foam::robinBC::theta
     
         if(hasContactLine(faceI))
         {
-            Info << nl << " From BC: theta " << thetaf[faceI] << " in cell " << cellID << nl;
-            Info << " and normal " << nHat[faceI] << nl;
+            //Info << nl << " From BC: thetaf " << thetaf[faceI] << " in cell " << cellID << nl;
+            //Info << " and normal " << nHat[faceI] << nl;
             contactLineAngle_[faceOwner[patch.start() + faceI]] = thetaf[faceI]; 
 
             //Info << "Before: CellID : " << cellID << " ThetaD = " << thetaf[faceI] << " and uwall " << uwall[faceI]<< nl;
@@ -451,13 +451,14 @@ Foam::robinBC::theta
 
             if
             (
-               ( (thetaf[faceI] < thetaA) && 
+               ( (thetaf[faceI] < thetaA_) && 
                 (uwall[cellID] <0) )
                 ||
-                ( (thetaf[faceI] > thetaR) && 
+                ( (thetaf[faceI] > thetaR_) && 
                 (uwall[cellID] >0) )
             ) //advancing
             {
+                //Info << " From BC : inside hysteresis" <<nl;
                     beta = 0;
                     //thetaf[faceI];
             }
@@ -473,7 +474,7 @@ Foam::robinBC::theta
                     // Close the file
                     outFile.close();
     
-                Info << " Inside beta==1" << nl;
+                //Info << " Inside beta==1" << nl;
 
                 //thetaf[faceI] = theta0_;
                 scalar uTheta_ = 1;
@@ -488,7 +489,7 @@ Foam::robinBC::theta
                 //     scalar(135)
                 // );
             }
-            Info << nl << "After: CellID : " << cellID << " ThetaD = " << thetaf[faceI] << " and uwall " << uwall[faceI]<< nl;
+            //Info << nl << "After: CellID : " << cellID << " ThetaD = " << thetaf[faceI] << " and uwall " << uwall[faceI]<< nl;
             clanglePatchField[faceI] = thetaf[faceI];             
         }
     }

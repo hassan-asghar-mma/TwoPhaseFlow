@@ -287,7 +287,7 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
                                     //Info << "Theta i" << contactAngle << nl;
                                     if((contactAngle < thetaA) && (contactAngle > thetaR))
                                     {
-                                       // Info << nl << " I am a CL hysteresis " << " and cellID " << cellID << nl;
+                                        Info << nl << " I am a CL hysteresis " << " and cellID " << cellID << nl;
                                         insideHysteresis = true;
                                         //Info << "Theta insisde hysteresis " << contactAngle << nl;
                                         //Info << " normal " << (-1*n0) << nl;
@@ -310,7 +310,7 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
 
     if (insideHysteresis)
     {
-        Info << " Inside the first hysteresis " << nl;
+        //Info << "\nFrom cutFace:  Inside the first hysteresis " << nl;
         // Inside the hysteresis make sure that alpha_f remains constant
         // divide the remaining dvf to the face which is already cut (after checking the conservation)
 
@@ -318,7 +318,8 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
         // 2. go the patch
         // 3. Keep the alpha_f constant for dvf
         label faceGId = faceI; // face global id
-        std::vector <double> pAlphaFieldFile; //Values from t=0 read from the file 
+        const label cellID = faceOwner[faceI]; 
+        std::vector <double> pAlpha0FieldFile; //Values from t=0 read from the file 
         scalar alphaf0 = 0.0;
         std::ifstream inFile("patchAlphaField.csv");
         scalar value;
@@ -326,12 +327,15 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
         std::string line;
         if (inFile.is_open()) {
             while (std::getline(inFile, line)) {
+                pAlpha0FieldFile.push_back(std::stof(line));
                 if(lineCount == faceLId)
                 {
-                    Info <<  line << " line " << std::stof(line) << " line count " << lineCount << " id " << faceLId << nl; 
+                    //Info <<  line << " line " << std::stof(line) << " line count " << lineCount << " id " << faceLId << nl; 
                     alphaf0 = std::stof(line);
                     break;
                 }
+                      
+
                 lineCount++; // Increment line counter
             }
             inFile.close();
@@ -342,16 +346,31 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
         //     const word & patchName = patches[patchi].name(); // Boundary patch name
         //     if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
         //     {
+        //         //Info << " Patch start " <<  boundaryMesh[patchi].start() << nl;
+        //         patchID = boundaryMesh.findPatchID(patchName);
+        //         forAll(patches[patchi], facei) 
+        //         {
+        //             abf[patchID][facei] = pAlpha0FieldFile[facei];
+        //         }
+        //     }
+        // }
+
+        // forAll(patches, patchi)
+        // {
+        //     const word & patchName = patches[patchi].name(); // Boundary patch name
+        //     if (patchName=="bottomRemainder" || patchName=="inlet") //isA<alphaContactAngleTwoPhaseFvPatchScalarField>(abf[patchi]))
+        //     {
                 
         //     }
         // }
 
-        Info << "Before: Hysteresis: For faceI " << faceI << " with subFaceArea " << subFaceArea() << " and alphaf " <<abf[patchID][faceLId] << " and alphaf0 " << alphaf0  << nl;
+        //Info << "Before: Hysteresis: for cell: " <<  cellID << " For faceI " << faceI << " with subFaceArea " << subFaceArea() << " and alphaf " <<abf[patchID][faceLId] << " and alphaf0 " << alphaf0  << nl;
         // Un0 is almost zero and isoFace is treated as stationary
         calcSubFace(faceI, -n0, x0);
         abf[patchID][faceLId] = alphaf0;
         //const scalar alphaf = mag(subFaceArea() / magSf);
-        Info << "After: Hysteresis: For faceI " << faceI << " with subFaceArea " << subFaceArea() << " and alphaf " << abf[patchID][faceLId] << " and alphaf0 " << alphaf0 << nl;
+        //Info << "After: Hysteresis: for cell: " <<  cellID << " For faceI " << faceI << " with subFaceArea " << subFaceArea() << " and alphaf " << abf[patchID][faceLId] << " and alphaf0 " << alphaf0 << nl << nl;
+        //Info << " /////////////////////////////////////////////////// \n \n";
 
 
         if (debug)
@@ -364,6 +383,7 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
         }
 
        // Info << " dvf at patch inside hystersis " << (phi * dt * alphaf0) << nl;
+       //alpha1_.write();
         return phi * dt * alphaf0;
     }
 

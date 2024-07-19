@@ -22,8 +22,8 @@ L   5;
 H   2.5;
 
 // Resolution in each direction
-nl  52;
-nh  25;
+nl  104;
+nh  50;
 
 // W (y-direction) is used as empty direction for 2D
 W   #eval {$L / $nl};   

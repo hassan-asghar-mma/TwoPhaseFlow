@@ -1,0 +1,98 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\	  /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format	ascii;
+    class	volScalarField;
+    object	alpha.water;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions	[0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+
+    right
+    {
+     	type            inletOutlet;
+        inletValue	uniform 0;
+        value           uniform 0;
+    }
+
+    top
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+    }
+
+    left
+    {
+        type            inletOutlet;
+        inletValue      uniform 0;
+        value           uniform 0;
+    }
+
+    phobic
+    {
+/*        type            constantAlphaContactAngle;
+        value           uniform 0;
+        theta0  115;
+        limit           gradient;
+*/
+	
+     	type            robinBC;
+        theta0          75;
+	value		0;
+        limit           gradient; 
+    }
+   
+    phylic
+    {
+	    type            robinBC;
+        theta0          75; 
+        value           0;
+        limit           gradient;
+/*
+       type            dynamicAlphaContactAngleCoxVoinov;
+       // muFieldName     nu1;
+        ct              50.0;
+        theta0          75;
+        limit           gradient; 
+*/
+        /*type            constantAlphaContactAngle;
+        value           uniform 0;
+        theta0  70;
+        limit           gradient;
+
+        type           dynamicAlphaContactAngle;
+        theta0         80;
+        thetaA         80;
+        thetaR         80;
+        uTheta         1;
+        limit          gradient;
+        value          uniform 0;*/
+    }
+
+    bottomEmptyFaces
+    {
+        type    empty;
+    }
+
+    topEmptyFaces
+    {
+        type    empty;
+    }
+}
+
+// ************************************************************************* //
+

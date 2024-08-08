@@ -16,9 +16,9 @@ runApplication createPatch -overwrite
 # Initialization
 runApplication surfaceInitVolumeFraction
 
-runApplication decomposePar
+#runApplication decomposePar
 
-runParallel interFlow 
+#runParallel interFlow 
 
 #runApplication interFlow 
 

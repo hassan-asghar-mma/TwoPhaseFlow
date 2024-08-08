@@ -54,7 +54,7 @@ boundaryField
         d           1.0e-5;
         pi          3.141592653589793;
         r           0.001;  // drop radius in meter
-        theta0      60;     // Equilibrium contact angle in degree
+        theta0      70;     // Equilibrium contact angle in degree
         phi         #eval{(180 - 2*(90 - $theta0))*$pi/180};
         fraction    1;
         volumetricFlowRate  #eval{$fraction*$d*0.5*$r*$r*($phi - sin($phi))};

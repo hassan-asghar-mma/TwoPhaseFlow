@@ -48,8 +48,11 @@ SourceFiles
 #define fdtDynamicAlphaContactAnglePlic_H
 
 #include "alphaContactAngleTwoPhaseFvPatchScalarField.H"
+#include "cutFacePLIC.H"
+#include "vector.H"
 #include "volFields.H"
 #include "fvMesh.H"
+#include "volFieldsFwd.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -82,6 +85,15 @@ class fdtDynamicAlphaContactAnglePlic
        
        //- Determine whether a face contains a contact line
        bool hasContactLine(label faceI) const;
+
+       //- For two given lines A and B, determine the two points with
+       //  minimum distance.
+       //  First point returned lies on line A, the second on B.
+       std::tuple<point,point> closestPoints
+       (
+            point pA, vector dirA, point pB, vector dirB
+       ) const;
+
 
 public:
 
@@ -153,6 +165,24 @@ public:
 
 
     // Member functions
+        //- Interpolate PLIC normals to the faces of the owner cell
+        //  of face I.
+        //  TODO: pass directly the cell ID, not the face ID
+        std::vector<std::tuple<point,vector>> interpolatePLICNormals
+        (
+            label faceI,
+            const volVectorField& interfaceCentre,
+            const volVectorField& interfaceNormal
+        ) const;
+
+        //- Extrapolate interface normals to a given point
+        vector extrapolatePLICNormals
+        (
+            point targetPoint,
+            point plicCentre,
+            vector plicNormal,
+            const std::vector<std::tuple<point,vector>>& pointsAndNormals
+        ) const;
 
         //- Evaluate and return dynamic contact-angle
         virtual tmp<scalarField> theta

@@ -26,6 +26,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
+#include "Identity.H"
 #include "error.H"
 #include "fdtDynamicAlphaContactAnglePlic.H"
 #include "addToRunTimeSelectionTable.H"
@@ -37,6 +38,8 @@ License
 #include "volFields.H"
 #include "unitConversion.H"
 #include "cutFacePLIC.H"
+#include <tuple>
+#include <vector>
 
 // * * * * * * * * * * * Private Member Functions * * * * * * * * * * * * * * //
 
@@ -138,6 +141,43 @@ bool Foam::fdtDynamicAlphaContactAnglePlic::hasContactLine(label faceI) const
 
     return false;
 }
+
+std::tuple<Foam::point,Foam::point> Foam::fdtDynamicAlphaContactAnglePlic::closestPoints
+(
+    point pA, vector dirA, point pB, vector dirB
+) const 
+{
+    // Ensure lines are not parallel
+    if ((1.0 - mag((dirA & dirB))/(mag(dirA)*mag(dirB))) < SMALL)
+    {
+        // Lines are parallel, throw error or something
+    }
+
+    // The connection between the closest points on two different lines
+    // is a line that is perpendicular to both lines. This fact is used to
+    // construct a 2x2 system A*x=b with scalar factors to the direction
+    // vector as unknowns.
+    
+    // Right hand side
+    scalar b1 = (pA - pB) & dirA;
+    scalar b2 = (pA - pB) & dirB;
+    scalar a11 =  dirA & dirA;
+    scalar a12 = -dirB & dirA;
+    scalar a21 =  dirA & dirB;
+    scalar a22 = -dirB & dirB;
+    scalar detA = a11*a22 - a12*a21;
+    
+    // Use analytic formula for inverse to compute the sought after
+    // scalar factors
+    scalar lambdaA = (a22*b1 - a12*b2)/detA;
+    scalar lambdaB = (-a21*b1 + a11*b2)/detA;
+
+    point closestOnA = pA + lambdaA*dirA;
+    point closestOnB = pB + lambdaB*dirB;
+
+    return std::tuple<point,point>{closestOnA,closestOnB};
+}
+
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
@@ -281,17 +321,18 @@ fdtDynamicAlphaContactAnglePlic
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
-std::vector<std::tuple<point,vector>> interpolatePLICNormals
+std::vector<std::tuple<Foam::point,Foam::vector>>
+Foam::fdtDynamicAlphaContactAnglePlic::interpolatePLICNormals
 (
     label faceI,
     const volVectorField& interfaceCentre,
     const volVectorField& interfaceNormal
-)
+) const
 {
+    std::vector<std::tuple<point,vector>> pointsAndNormals{};
+
     const auto& mesh = interfaceCentre.mesh();
     auto cellI = mesh.faceOwner()[faceI];
-    auto cCI = interfaceCentre[cellI];
-    auto nCI = interfaceNormal[cellI];
 
     // TT: First, only try the face neighbour cells and see if this works
     // reliably. If not, we may need also the edge and point neighbouring cells
@@ -299,8 +340,11 @@ std::vector<std::tuple<point,vector>> interpolatePLICNormals
     const auto& cells = mesh.cells();
     const auto& thisCell = cells[cellI];
 
-    for(auto cellK : cellToCell)
+    for(auto cellK : cellToCell[cellI])
     {
+        // TODO (TT): when initializing normals from the ones given by SMCIA,
+        // we have non-zero normals in every cell. We need an additional check to
+        // rule them out as candidates.
         if (magSqr(interfaceNormal[cellK]) != 0.0)
         {
             // Get the face connecting cellI and cellK
@@ -322,25 +366,250 @@ std::vector<std::tuple<point,vector>> interpolatePLICNormals
                     break;
                 }
             }
+            
+            // Get the cuts of the face connecting cellI and cellK with their
+            // respective PLICs.
+            // Only continue with interpolation in case both PLICs intersect the
+            // face shared by the two cells
 
-            // Get the cell cuts of the face connecting cellI and cellK
-            cutFacePLIC cutFace(mesh);
-            label cutStatusI = cutFace.calcSubFace
+            // Note (TT): the field 'interfaceNormals' does not provide unit normals,
+            // but probably normals scaled with the area of the corresponding PLIC
+            auto normalI = interfaceNormal[cellI];
+            normalI.normalise();
+            auto normalK = interfaceNormal[cellK];
+            normalK.normalise();
+
+            cutFacePLIC cutFaceI(mesh);
+            label cutStatusI = cutFaceI.calcSubFace
                 (
                     connectingFaceI,
-                    interfaceNormal[cellI],
+                    normalI,
                     interfaceCentre[cellI]
                 );
-            label cutStatusK = cutFace.calcSubFace
+
+            // Debug
+            //Info<< "Cut status of cellI: " << cutStatusI << endl;
+            
+            cutFacePLIC cutFaceK(mesh);
+            label cutStatusK = cutFaceK.calcSubFace
                 (
                     connectingFaceI,
-                    interfaceNormal[cellK],
+                    normalK,
                     interfaceCentre[cellK]
                 );
+            // Debug
+            //Info<< "Cut status of cellK: " << cutStatusK << endl;
+            //Info<< "Normal_I: " << interfaceNormal[cellI] << ", centroid_I: " << interfaceCentre[cellI]
+            //    << ", PLIC area_I: " << mag(interfaceNormal[cellI]) << nl
+            //    << "Normal_K: " << interfaceNormal[cellK] << ", centroid_K: " << interfaceCentre[cellK]
+            //    << ", PLIC area_K: " << mag(interfaceNormal[cellK]) << endl;
+            if (cutStatusK != 0 || cutStatusI != 0)
+            {
+                continue;
+            }
 
+            // Perform interpolation. The idea to find the proper point to interpolate to
+            // is sketeched below:
+            //  1) The PLIC cuts of the face do not coincide in general. Thus, compute an
+            //      average intersection line L.
+            //  2) Compute the line connecting both PLIC centres CC.
+            //  3) On L, find the point closest to CC. This is the point PI to interpolate to.
+            //  4) As interpolation weights the distances between the PLIC centres and PI
+            //     are used.
+            const auto& cutPointsI = cutFaceI.surfacePoints();
+            const auto& cutPointsL = cutFaceK.surfacePoints();
+
+            // Debug
+            //Info<< "Cut points of face I: " << cutPointsI << endl;
+            //Info<< "Cut points of face K: " << cutPointsL << endl;
+
+            point LA{0,0,0};
+            point LB{0,0,0};
+
+            // Average the points that are closer to each other
+            if (magSqr(cutPointsI[0] - cutPointsL[0]) < magSqr(cutPointsI[0] - cutPointsL[1]))
+            {
+                LA = 0.5*(cutPointsI[0] + cutPointsL[0]);
+                LB = 0.5*(cutPointsI[1] + cutPointsL[1]);
+            }
+            else
+            {
+                LA = 0.5*(cutPointsI[0] + cutPointsL[1]);
+                LB = 0.5*(cutPointsI[1] + cutPointsL[0]);
+            }
+
+            // Construct direction of line L
+            // Debug
+            //Info<< "Averaged points from cutting mesh face with PLICs: "
+            //    << "LA = " << LA << ", LB = " << LB << endl; 
+            vector ldir = LB - LA;
+
+            // Construct line between PLIC centroids
+            point CA{interfaceCentre[cellI]};
+            vector cdir = interfaceCentre[cellK] - interfaceCentre[cellI];
+            // Debug
+            //Info<< "Vector connecting PLIC centroids: " << cdir << endl;
+
+            //auto [pInterp, noUsed] = closestPoints(LA, ldir, CA, cdir);
+            point pInterp{}, notUsed{};
+            std::tie(pInterp, notUsed) = closestPoints(LA, ldir, CA, cdir);
+
+            // Debug
+            //Info<< "Interpolating PLIC normals to " << pInterp << endl;
+
+            // Use distances to pInterp as interpolation weights
+            auto distI = mag(interfaceCentre[cellI] - pInterp);
+            auto distK = mag(interfaceCentre[cellK] - pInterp);
+
+            vector nInterp = (distI*normalK + distK*normalI)/(distI + distK);
+            nInterp.normalise();
+
+            // Debug
+            // Plausibility check: the angle enclosed between the the two PLIC normals should
+            //  be larger than the angle enclosed by either of them with the interpolated normal.
+            //  For simplicity, it is assumed that all enclosed angles are smaller than 90 degrees.
+            //auto plicAngle = radToDeg(Foam::acos(normalI & normalK));
+            //auto angleIInterp = radToDeg(Foam::acos(normalI & nInterp));
+            //auto angleKInterp = radToDeg(Foam::acos(normalK & nInterp));
+            //Info<< "Angle enclosed by PLIC normals: " << plicAngle << nl
+            //    << "Angle between PLIC I and interpolated normal: " << angleIInterp << nl
+            //    << "Angle between PLIC K and interpolated normal: " << angleKInterp << nl
+            //    << "Sum of interpolated angles: " << angleIInterp + angleKInterp
+            //    << endl;
+
+            pointsAndNormals.push_back(std::make_tuple(pInterp, nInterp));
         }
     }
 
+    return pointsAndNormals;
+}
+
+Foam::vector Foam::fdtDynamicAlphaContactAnglePlic::extrapolatePLICNormals
+(
+    point targetPoint,
+    point plicCentre,
+    vector plicNormal,
+    const std::vector<std::tuple<point,vector>>& pointsAndNormals
+) const
+{
+    // Ensure we have a unit normal
+    plicNormal.normalise();
+
+    // Construct the plane spanned by the plic centroid, its normal and the
+    // line to the target point
+    auto planeNormal = (targetPoint - plicCentre) ^ plicNormal;
+    planeNormal.normalise();
+
+    // Project the points and normals into the plane
+    std::vector<point> projectedPoints(pointsAndNormals.size());
+    std::vector<vector> projectedNormals(pointsAndNormals.size());
+    auto projector = (tensor::I - (planeNormal*planeNormal));
+
+    Info<< "Projecting points and normals" << endl;
+    for (uLabel I = 0; I != pointsAndNormals.size(); ++I)
+    {
+        point p{};
+        vector n{};
+
+        std::tie(p, n) = pointsAndNormals[I];
+
+        projectedPoints[I] = plicCentre + (projector & (p - plicCentre));
+        projectedNormals[I] = projector & n;
+        projectedNormals[I].normalise();
+    }
+
+    // Transform points and normals into the local coordinate system
+    // The local, 2D coordinate system is defined as follows:
+    //  - The connection from the PLIC centroid to the target point
+    //      defines the positive x-direction.
+    //  - The PLIC normal defines the positive y-direction.
+    std::vector<point> transformedPoints(pointsAndNormals.size());
+    std::vector<vector> transformedNormals(pointsAndNormals.size());
+
+    // The transformation into the local coordinate system can be done
+    // by scalar products with the vectors representing base vectors
+    // of the local coordinate system.
+    vector exl = (targetPoint - plicCentre);
+    exl.normalise();
+    vector eyl = plicNormal;
+    // The z component in the local coordinate system is zero by contruction
+    // due to the projection into a plane done above.
+
+    for (uLabel I = 0; I != pointsAndNormals.size(); ++I)
+    {
+        point p = projectedPoints[I];
+        transformedPoints[I] = point{p&exl, p&eyl, 0.0};
+
+        vector n = projectedNormals[I];
+        transformedNormals[I] = vector{n&exl, n&eyl, 0.0};
+    }
+
+    // Construct and solve the least-squares fit for a parabola
+    // TODO: document this somewhere, noone can follow this without derivation
+    // The linear least squares problem using the normal formulation results
+    // in a 2x2 system to fit the parabola. The third coefficient of the parabola
+    // is set to zero per construction so the parabola passes through the PLIC centroid.
+    // linCoeff is the first unknown of the system, quadCoeff the second one,
+    // according to 
+    // f(x) = linCoeff*x + quadCoeff*x^2
+
+    // The contributions from the PLIC centroid and its normals are not included in
+    // pointsAndNormals, so they are usedhere to initialize the values.
+    scalar A11 = 1.0;
+    scalar A12 = 0.0;
+    scalar A22 = 0.0;
+    scalar b1 = 0.0;
+    scalar b2 = 0.0;
+
+    for (uLabel I = 0; I != pointsAndNormals.size(); ++I)
+    {
+        auto p = transformedPoints[I];
+        auto n = transformedNormals[I];
+        A11 += pow(p.x(), 2) + pow(n.y(), 2);
+        A12 += pow(p.x(), 3) + 2*p.x()*pow(n.y(), 2);
+        A22 += pow(p.x(), 4) + 4*pow(p.x(), 2)*pow(n.y(), 2);
+
+        b1 += p.x()*p.y() - p.x()*n.x()*n.y();
+        b2 += pow(p.x(), 2)*p.y() - 2*pow(p.x(), 2)*n.x()*n.y();
+    }
+
+    scalar A21 = A12;
+    scalar detA = A11*A22 - A21*A12;
+
+    scalar linCoeff = 1.0/detA*(A22*b1 - A21*b2);
+    scalar quadCoeff = 1.0/detA*(-A12*b1 + A11*b2);
+
+    // Per construction of the local coordinate system, the x-value of the target
+    // point is the distance between it and the PLIC centroid
+    auto xtp = mag(targetPoint - plicCentre);
+
+    // Compute the interface normal at the target point, transform it
+    // to the global coordinate system and return it.
+    // Transformation from the local to the global coordinate system is done
+    // by computing the product of the vector component in local coordinate
+    // system with the corresponding base vector expressed in the global
+    // coordinate system.
+
+    // x-component of the normal in local coordinate system is the derivative of
+    // the parabola at xtp
+    auto targetNormal_X_local = linCoeff + 2*quadCoeff*xtp;
+    auto targetNormal_Y_local = -xtp;
+
+    auto targetNormal = targetNormal_X_local*exl + targetNormal_Y_local*plicNormal; 
+    targetNormal.normalise();
+
+    // Check orientation of normal with respect to PLIC normal, they should enclose
+    // an angle smaller than 90 degree
+    if ((targetNormal & plicNormal) < 0.0)
+    {
+        targetNormal *= -1.0;
+    }
+
+    // Debug
+    Info<< "PLIC normal: " << plicNormal << ", extraploted normal: "
+        << targetNormal << endl;
+
+    return targetNormal;
 }
 
 Foam::tmp<Foam::scalarField>
@@ -447,6 +716,11 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
         "interfaceCentre", 
         this->internalField().group()
     );
+    const auto alphaName = IOobject::groupName
+    (
+        "alpha", 
+        this->internalField().group()
+    );
 
     bool hasNormals = db.found(normalsName);
     if (!hasNormals)
@@ -472,25 +746,61 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
     const volVectorField& interfaceCentre = 
         db.lookupObject<volVectorField>(centresName);
 
+    const volScalarField& alpha = 
+        db.lookupObject<volScalarField>(alphaName);
+
     cutFacePLIC cutFace(mesh);
 
     // For all boundary faces
     Info << "\n--- Entering loop over FDT boundary faces ---" << endl;
     forAll(thetaf, faceI)
     {
+        const label cellI = patch.faceCells()[faceI];
+
         // If we are in a contact-line cell
-        if (mag(nHat[faceI]) > 0) //TODO(TM): && hasContactLine(faceI))
+        // TODO: at least in the first time step, checking for a non-zero normal is not sufficient.
+        //      The initialization sets the interface normals in every cell.
+        //      Thus, we need to check the alpha field or something else in addition.
+        if (mag(nHat[faceI]) > 0 && (alpha[cellI] > 1.0e-8) && (alpha[cellI] < (1.0-1.0e-8))) //TODO(TM): && hasContactLine(faceI))
         {
-            const label cellI = patch.faceCells()[faceI];
+            const label globalFaceI = patch.start() + faceI;
 
             // Extrapolate PLIC normals to contact line by first interpolating to the PLIC from
             // neighbours and then do the actual extrapolation
             if (hasContactLine(faceI))
             {
-                auto normalsAndPoints = interpolatePLICNormals(faceI, interfaceCentre, interfaceNormal);
-                auto contactLineNormal = extrapolatePLICNormals(faceI, normalsAndPoints);
-                auto contactAngle = radToDeg(Foam::acos(contactLineNormal & nf[faceI]));
-                Info<< "Contact angle difference between PLIC and extrapolated normal: " << thetaf[faceI] - contactAngle << endl;
+                auto pointsAndNormals = interpolatePLICNormals(globalFaceI, interfaceCentre, interfaceNormal);
+                Info<< "Found " << pointsAndNormals.size() << " interpolated normals." << endl;
+
+                // Debug: catch the case that against expectation no neighbouring cells with
+                // PLIC normals are found
+                if (pointsAndNormals.size() > 0)
+                {
+                    cutFacePLIC boundaryCut(mesh);
+                    auto normalI = interfaceNormal[cellI];
+                    normalI.normalise();
+                    boundaryCut.calcSubFace(globalFaceI, normalI, interfaceCentre[cellI]);
+                    auto intersections = boundaryCut.surfacePoints();
+                    auto contactLineCentre = 0.5*(intersections[0] + intersections[1]);
+
+                    Info<< "Extrapolating normal to contact line" << endl;
+
+                    auto contactLineNormal = extrapolatePLICNormals
+                                                   (
+                                                        contactLineCentre,
+                                                        interfaceCentre[cellI],
+                                                        normalI,
+                                                        pointsAndNormals
+                                                    );
+                    auto contactAngle = radToDeg(Foam::acos(contactLineNormal & nf[faceI]));
+                    Info<< "Contact angle difference between PLIC and extrapolated normal: " << mag(thetaf[faceI] - contactAngle) << endl;
+                    thetaf[faceI] = contactAngle;
+                }
+                else
+                {
+                    // Throw error
+                    Info<< "Warning: did not find ant normals to interpolate for cell " << cellI << endl;
+                }
             }
 
             // Visualize current PLIC contact angle as a cell-centered value.
@@ -526,7 +836,7 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
                 // If the face is actually cut
                 if(cutStatus == 0)
                 {
-                    const auto& cutPoints = cutFace.subFacePoints(); 
+                    const auto& cutPoints = cutFace.surfacePoints(); 
                     // Geometrical contact line length
                     scalar Cll = Foam::mag (cutPoints[1] - cutPoints[0]);  
                     // Scale Cstar with Cll 

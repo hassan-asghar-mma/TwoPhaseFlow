@@ -1,28 +1,66 @@
 #!/bin/sh
-cd ${0%/*} || exit 1                        # Run from this directory
-. $WM_PROJECT_DIR/bin/tools/RunFunctions    # Tutorial run functions
 
 # Preprocessing
 rm -rf 0 && cp -r 0.org 0 
 touch case.foam
 
-runApplication blockMesh
-runApplication checkMesh
+# Classic blockMesh
+#echo "Running blockMesh..."
+#blockMesh > log.blockMesh 2>&1
+
+# CfMesh to make use of refinement
+echo "Running surfaceFeatureEdges..."
+surfaceFeatureEdges boundaryMesh/boxBoundary.stl domainBoundary.fms > log.surfaceFeatureEdges 2>&1
+echo "Running cartesianMesh..."
+# Limit number of threads cfMesh uses
+export OMP_NUM_THREADS=4
+cartesianMesh > log.cartesianMesh 2>&1
+
+# Ensure mesh quality
+echo "Running cartesianMesh..."
+checkMesh > log.checkMesh 2>&1
 
 # Create the inlet patch using topoSet and createPatch
-runApplication topoSet
-runApplication createPatch -overwrite
+echo "Running topoSet..."
+topoSet > log.topoSet 2>&1
+echo "Running createPatch..."
+createPatch -overwrite > log.createPatch 2>&1
 
 # Initialization
-runApplication surfaceInitVolumeFraction
+echo "Running surfaceInitVolumeFraction..."
+surfaceInitVolumeFraction > log.surfaceInitVolumeFraction 2>&1
+decomposePar > log.decomposePar 2>&1
 
-runApplication decomposePar
+# Prepare parallel execution. Only used for higher resolutions or
+# refinement levels
+#refLevel=$(grep "refinementLevel" constant/caseParameters | grep -o "[0-9]")
+#if [ "$refLevel" -gt 1 ]; then
+#    echo "Running decomposePar..."
+#    decomposePar > log.decomposePar 2>&1
+#    ncores=4
+#else
+#    ncores=1
+#fi
 
-nohup mpirun -n 4 interFlow -parallel > log.interFlow 2>&1 &
+# Check whether on cluster or on a regular machine
 
-## Postprocessing
-#runApplication foamToVTK
-#
-#runApplication decomposePar
+# Submit as cluster job
+#if uname -a | grep hpc ; then
+#    echo "Submitting job to cluster"
+#    ./submit_interFlow.sh $ncores
+# Run locally
+#else
+#    cd ${0%/*} || exit 1                        # Run from this directory
+#    . $WM_PROJECT_DIR/bin/tools/RunFunctions    # Tutorial run functions
+
+#    if [ "$refLevel" -gt 1 ]; then
+        # Run in parallel
+#        runParallel -s growingDroplet3D.o interFlow
+#    else
+        # Run in serial
+#        runApplication -s growingDroplet3D.o interFlow
+#    fi
+#fi
+
 #------------------------------------------------------------------------------
 

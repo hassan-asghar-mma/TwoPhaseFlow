@@ -10,9 +10,13 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      alpha.water;
+    object      alpha.oil;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Some parameters are defined in separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
 
 dimensions      [0 0 0 0 0 0 0];
 
@@ -53,11 +57,11 @@ boundaryField
 
     bottomRemainder
     {
-    	type 		fdtHysteresis;
+    	type 		fdtHysteresisPlic;
 	    value 		uniform 0;
 	    theta0 	    60;             // Not used by boundary condition
-        thetaA      80;    // Advancing contact angle
-        thetaR      40;    // Receding contact angle
+        thetaA      $advancingCA;   // Advancing contact angle
+        thetaR      40;             // Receding contact angle
         dxdy        1;              // Cell aspect ratio, 1 for uniform meshes
 	    limit 		none;
     }

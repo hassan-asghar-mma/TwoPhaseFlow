@@ -15,6 +15,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// Some parameters are defined in a separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
+
 application     interFlow;
 
 startFrom       latestTime;
@@ -23,17 +27,20 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1.0;
+// The endtime is chosen as the analytical time that is required to reach the
+// the advancing contact angle plus 0.3 seconds for the contact line to move.
+// Assumes an initial contact angle of 60 degree.
+endTime         #eval{1.0/$inletFraction*(0.105*($advancingCA - 60) - 1.2)};
 
 deltaT          1.0e-5;
 
-writeControl    timeStep;
+writeControl    runTime;
 
-writeInterval   10;
+writeInterval   #eval{0.01/$inletFraction};
 
 purgeWrite      0;
 
-writeFormat     ascii;
+writeFormat     binary;
 
 writePrecision  14;
 
@@ -57,13 +64,12 @@ maxCapillaryNum 0.0002; //0.5;
 
 libs
 (
-    "libtwoPhaseProperties.so"
     "libdynContactAngleModels.so"
 );
 
 OptimisationSwitches
 {
-
+/*
       //- Parallel IO file handler
       // uncollated (default), collated or masterUncollated
       fileHandler collated;
@@ -77,6 +83,7 @@ OptimisationSwitches
       // If the file exceeds this buffer size scheduled transfer is used.
       // Default: 2e9
       maxMasterFileBufferSize 2e9;
+*/
 }
 
 
@@ -102,7 +109,7 @@ functions
         }
         fields
         (
-            p U alpha.water_glycerol
+            p U alpha.oil
         );
         
         interpolationScheme cellPoint;
@@ -112,7 +119,7 @@ functions
             isoAlpha
             {
                 type        isoSurface;
-                isoField    alpha.water_glycerol;
+                isoField    alpha.oil;
                 isoValue    0.5;
                 interpolate true;
             }
@@ -138,22 +145,56 @@ functions
             }
         }
     }
+
+    // Compute wetted area and droplet volume
     wettedArea
     {
-	type wettedArea;
-	libs ("libwettedAreaFunctionObject.so");
-	phaseIndicator alpha.water_glycerol;
-	patchName bottom;
-    }
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            (fieldFunctionObjects);
 
-    contactAngleEvaluation
+        // Mandatory entries (runtime modifiable)
+        fields          (alpha.oil);
+        operation       areaIntegrate;
+        regionType      faceZone;
+        name            bottomFaces;
+
+        // Optional entries (runtime modifiable)
+        postOperation   none;
+        weightField     none;
+        scaleFactor     1.0;
+        writeArea       false;
+        surfaceFormat   none;
+        writeFields     no;
+
+        // Only execute evaluation every 10th time step
+        executeControl  timeStep;
+        executeInterval 10;
+    }
+    dropletVolume
     {
-     	type contactAngleEvaluation;
-        libs ("libcontactAngleEvaluationFunctionObject.so");
-        phaseIndicator alpha.water_glycerol;
-        centre (@!dropCx!@ @!dropCy!@ @!dropCz!@);
+        // Mandatory entries (unmodifiable)
+        type            volFieldValue;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory entries (runtime modifiable)
+        fields          (alpha.oil);
+        operation       volIntegrate;
+        regionType      all;
+
+        // Optional entries (runtime modifiable)
+        postOperation   none;
+        weightField     none;
+        scaleFactor     1.0;
+        writeFields     no;
+
+        // Only execute evaluation every 10th time step
+        executeControl  timeStep;
+        executeInterval 10;
     }
 
+    // Monitor contact angles over time
+    #include "monitorContactAngle"
 }
 // ************************************************************************* //
 

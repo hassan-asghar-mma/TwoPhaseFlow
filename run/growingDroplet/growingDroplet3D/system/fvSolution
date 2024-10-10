@@ -17,7 +17,7 @@ FoamFile
 
 solvers
 {
-    "alpha.water_glycerol.*"
+    "alpha.*"
     {
         advectionScheme   isoAdvection;
         isoFaceTol      1e-11;
@@ -67,12 +67,12 @@ solvers
 
 PIMPLE
 {
-    momentumPredictor no;
-    nCorrectors     3;
-    nOuterCorrectors 1;
+    momentumPredictor        no;
+    nCorrectors              3;
+    nOuterCorrectors         1;
     nNonOrthogonalCorrectors 0;
-    pRefCell        0;
-    pRefValue       0;
+    pRefCell                 0;
+    pRefValue                0;
 }
 
 

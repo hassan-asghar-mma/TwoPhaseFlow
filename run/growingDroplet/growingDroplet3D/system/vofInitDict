@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-fieldName       alpha.water_glycerol;
+fieldName       alpha.oil;
 algorithm       SMCA;
 writeGeometry   off;
 invert          off;

@@ -1,0 +1,27 @@
+// Parameter study to examine the behaviour of the FDT model for the
+// geometric VOF method
+
+values
+{
+    REFINEMENT_LEVEL
+    (
+        0 1 2
+    );
+
+    CURV_FROM_TRACE
+    (
+        on off
+    );
+
+    INLET_FRACTION
+    (
+        0.25 0.5 1
+    );
+
+    ADVANCING_CA
+    (
+        80  110
+    );
+
+    solver ( interFlow );
+}

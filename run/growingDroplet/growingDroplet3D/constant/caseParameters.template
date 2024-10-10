@@ -1,0 +1,6 @@
+// Parameters which are are varied as part of parameter studies
+refinementLevel         |-REFINEMENT_LEVEL-|;
+resolutionHeight        50;
+useCurvatureFromTrace   |-CURV_FROM_TRACE-|;
+inletFraction           |-INLET_FRACTION-|;
+advancingCA             |-ADVANCING_CA-|; // Does it make sense to vary this? To see angles above 90?

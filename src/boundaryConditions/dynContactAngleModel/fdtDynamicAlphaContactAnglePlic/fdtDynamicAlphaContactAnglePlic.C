@@ -505,7 +505,7 @@ Foam::vector Foam::fdtDynamicAlphaContactAnglePlic::extrapolatePLICNormals
     std::vector<vector> projectedNormals(pointsAndNormals.size());
     auto projector = (tensor::I - (planeNormal*planeNormal));
 
-    Info<< "Projecting points and normals" << endl;
+    //Info<< "Projecting points and normals" << endl;
     for (uLabel I = 0; I != pointsAndNormals.size(); ++I)
     {
         point p{};
@@ -513,7 +513,7 @@ Foam::vector Foam::fdtDynamicAlphaContactAnglePlic::extrapolatePLICNormals
 
         std::tie(p, n) = pointsAndNormals[I];
 
-        projectedPoints[I] = plicCentre + (projector & (p - plicCentre));
+        projectedPoints[I] = projector & (p - plicCentre);
         projectedNormals[I] = projector & n;
         projectedNormals[I].normalise();
     }
@@ -554,7 +554,7 @@ Foam::vector Foam::fdtDynamicAlphaContactAnglePlic::extrapolatePLICNormals
     // f(x) = linCoeff*x + quadCoeff*x^2
 
     // The contributions from the PLIC centroid and its normals are not included in
-    // pointsAndNormals, so they are usedhere to initialize the values.
+    // pointsAndNormals, so they are used here to initialize the values.
     scalar A11 = 1.0;
     scalar A12 = 0.0;
     scalar A22 = 0.0;
@@ -606,8 +606,8 @@ Foam::vector Foam::fdtDynamicAlphaContactAnglePlic::extrapolatePLICNormals
     }
 
     // Debug
-    Info<< "PLIC normal: " << plicNormal << ", extraploted normal: "
-        << targetNormal << endl;
+    //Info<< "PLIC normal: " << plicNormal << ", extraploted normal: "
+    //    << targetNormal << endl;
 
     return targetNormal;
 }
@@ -690,6 +690,9 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
     const label patchIndex =patch.index();
     auto& clangleBoundaryField = contactLineAngle_.boundaryFieldRef();
     auto& clanglePatchField = clangleBoundaryField[patchIndex];
+
+    // Reset clangePatchField to reset contact angles from previous time steps
+    clanglePatchField = 0.0;
     
     // Visualization of the contact angle
     const fvMesh& mesh = nu.mesh(); 
@@ -752,7 +755,18 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
     cutFacePLIC cutFace(mesh);
 
     // For all boundary faces
-    Info << "\n--- Entering loop over FDT boundary faces ---" << endl;
+    //Info << "\n--- Entering loop over FDT boundary faces ---" << endl;
+
+    // Summarized debug info
+    uLabel nCLcells = 0;
+    scalar caMin = 180.0;
+    scalar caMax = 0.0;
+    scalar caMean = 0.0;
+    uLabel nHysteresisCells = 0;
+    scalar dThetaMin = 180.0;
+    scalar dThetaMax = -180.0;
+    scalar dThetaMean = 0.0;
+
     forAll(thetaf, faceI)
     {
         const label cellI = patch.faceCells()[faceI];
@@ -770,7 +784,7 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
             if (hasContactLine(faceI))
             {
                 auto pointsAndNormals = interpolatePLICNormals(globalFaceI, interfaceCentre, interfaceNormal);
-                Info<< "Found " << pointsAndNormals.size() << " interpolated normals." << endl;
+                //Info<< "Found " << pointsAndNormals.size() << " interpolated normals." << endl;
 
                 // Debug: catch the case that against expectation no neighbouring cells with
                 // PLIC normals are found
@@ -783,7 +797,7 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
                     auto intersections = boundaryCut.surfacePoints();
                     auto contactLineCentre = 0.5*(intersections[0] + intersections[1]);
 
-                    Info<< "Extrapolating normal to contact line" << endl;
+                    //Info<< "Extrapolating normal to contact line" << endl;
 
                     auto contactLineNormal = extrapolatePLICNormals
                                                    (
@@ -793,20 +807,20 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
                                                         pointsAndNormals
                                                     );
                     auto contactAngle = radToDeg(Foam::acos(contactLineNormal & nf[faceI]));
-                    Info<< "Contact angle difference between PLIC and extrapolated normal: " << mag(thetaf[faceI] - contactAngle) << endl;
+                    //Info<< "Contact angle difference between PLIC and extrapolated normal: " << mag(thetaf[faceI] - contactAngle) << endl;
                     thetaf[faceI] = contactAngle;
                 }
                 else
                 {
                     // Throw error
-                    Info<< "Warning: did not find ant normals to interpolate for cell " << cellI << endl;
+                    //Info<< "Warning: did not find ant normals to interpolate for cell " << cellI << endl;
                 }
             }
 
             // Visualize current PLIC contact angle as a cell-centered value.
             contactLineAngle_[cellI] = thetaf[faceI];
 
-            Pout << "theta_old = " << thetaf[faceI] << endl;
+            //Pout << "theta_old = " << thetaf[faceI] << endl;
             if (thetaf[faceI] < thetaR_) // Receding regime
             {
                 thetaf[faceI] = thetaR_;
@@ -854,38 +868,62 @@ Foam::fdtDynamicAlphaContactAnglePlic::theta
                 if (uwall[faceI] < 0)
                 {
                     thetaf[faceI] += dtheta;
-                    Pout << "Hysteresis mode advancing, " 
-                        << " dtheta = " << dtheta 
-                        << " uwall = " << uwall[faceI] 
-                        << endl;
+                    //Pout << "Hysteresis mode advancing, " 
+                    //    << " dtheta = " << dtheta 
+                    //    << " uwall = " << uwall[faceI] 
+                    //    << endl;
                 }
                 else if (uwall[faceI] > 0)
                 {
                     thetaf[faceI] -= dtheta;
-                    Pout << "Hysteresis mode receding, " 
-                        << " dtheta = " << -dtheta 
-                        << " uwall = " << uwall[faceI] 
-                        << endl;
+                    //Pout << "Hysteresis mode receding, " 
+                    //    << " dtheta = " << -dtheta 
+                    //    << " uwall = " << uwall[faceI] 
+                    //    << endl;
                 }
                 else
                 {
-                    Pout << "Do nothing thetaf = " << thetaf[faceI] << endl;
+                    //Pout << "Do nothing thetaf = " << thetaf[faceI] << endl;
                 }
+
+                // Collect summarized debug info
+                ++nHysteresisCells;
+                dThetaMin = min(dThetaMin, dtheta);
+                dThetaMax = max(dThetaMax, dtheta);
+                dThetaMean += dtheta;
             }
             // Visualize the new dynamic contact angle as a face-centered value.
             clanglePatchField[faceI] = thetaf[faceI];
-            Pout << "Contact line on face " << faceI
-                 << "Cell ID " << nu.mesh().faceOwner()[faceI + this->patch().start()]
-                 << "\n\ttheta = " << thetaf[faceI]
-                 << "\n\tnWall = " << nWall[faceI]
-                 << "\n\tuwall = " << uwall[faceI]
-                 <<endl;
-
+            //Pout << "Contact line on face " << faceI
+            //     << "Cell ID " << nu.mesh().faceOwner()[faceI + this->patch().start()]
+            //     << "\n\ttheta = " << thetaf[faceI]
+            //     << "\n\tnWall = " << nWall[faceI]
+            //     << "\n\tuwall = " << uwall[faceI]
+            //     <<endl;
+            
+            // Collect info for debug summary
+            ++nCLcells;
+            caMean += thetaf[faceI];
+            caMin = min(thetaf[faceI], caMin);
+            caMax = max(thetaf[faceI], caMax);
         }
     }
 
-    // TODO(TM): check 4 angles are written in 2D. 
-    //Info  << thetafTmp() << endl;
+    caMean /= nCLcells;
+
+    // Output debug summary
+    Pout<< "Contact line info:" << nl
+        << "\tnumber of contact line cells: " << nCLcells << nl
+        << "\tcontact angles (min/mean/max): "
+        << caMin << ",\t" << caMean << ",\t" << caMax
+        << endl;
+    if (nHysteresisCells > 0)
+    {
+        Pout<< "\tnumber of hysteresis cells: " << nHysteresisCells << nl
+            << "\tdtheta values (min/mean/max): "
+            << dThetaMin << ",\t" << dThetaMean/nHysteresisCells << ",\t"
+            << dThetaMax << endl;
+    }
 
     return thetafTmp; 
 }

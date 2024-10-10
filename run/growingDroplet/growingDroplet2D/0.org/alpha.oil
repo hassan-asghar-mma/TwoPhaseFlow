@@ -14,6 +14,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// Some parameters are defined in a separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
+
 dimensions      [0 0 0 0 0 0 0];
 
 internalField   uniform 0;
@@ -53,13 +57,14 @@ boundaryField
 
     bottomRemainder
     {
+        // Geometric VoF hysteresis
     	type 		fdtHysteresisPlic;
-	value 		uniform 60;
-	theta0 	    70;             // Not used by boundary condition
-        thetaA      110;    // Advancing contact angle
-        thetaR      40;    // Receding contact angle
+	    value 		uniform 60;
+	    theta0 	    60;             // Not used by boundary condition
+        thetaA      $advancingCA;   // Advancing contact angle
+        thetaR      40;             // Receding contact angle
         dxdy        1;              // Cell aspect ratio, 1 for uniform meshes
-	limit 		none;
+	    limit 		none;
     }
 }
 

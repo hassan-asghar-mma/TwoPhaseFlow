@@ -31,7 +31,7 @@ distCalc
     surfaceType     levelSet;
     surface         sphere;
     // TODO: adapt z-coordinate so the equilibrium contact angle is recovered
-    center          (0.0025 0.0 #eval{-cos(70*3.14/180)*$radius});
+    center          (0.0025 0.0 #eval{-cos(60*3.14/180)*$radius});
     radius          $radius;
     orientation     inward;
     narrowBandWidth 4.0;

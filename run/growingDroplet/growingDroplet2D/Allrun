@@ -1,31 +1,42 @@
 #!/bin/sh
-cd ${0%/*} || exit 1                        # Run from this directory
-. $WM_PROJECT_DIR/bin/tools/RunFunctions    # Tutorial run functions
+
+# NOTE: using OpenFOAM's 'runApplication' does not work when submitting
+# parameter studies. Thus, its functionality is emulated here using
+# echo and output redirection to log files.
 
 # Preprocessing
 rm -rf 0 && cp -r 0.org 0 
-touch case.foam
+touch view.foam
 
-runApplication blockMesh
-runApplication checkMesh
+echo "Running blockMesh..."
+blockMesh > log.blockMesh 2>&1
+echo "Running checkMesh..."
+checkMesh > log.checkMesh 2>&1
 
 # Create the inlet patch using topoSet and createPatch
-runApplication topoSet
-runApplication createPatch -overwrite
+echo "Running topoSet..."
+topoSet > log.topoSet 2>&1
+echo "Running createPatch..."
+createPatch -overwrite > log.createPatch 2>&1
 
 # Initialization
-runApplication surfaceInitVolumeFraction
-
-#runApplication decomposePar
-
-#runParallel interFlow 
-
-#runApplication interFlow 
+echo "Running surfaceInitVolumeFraction..."
+surfaceInitVolumeFraction > log.surfaceInitVolumeFraction 2>&1
 
 
-## Postprocessing
-#runApplication foamToVTK
+# Check whether on cluster or on a regular machine
+
+# Submit as cluster job
+#if uname -a | grep hpc ; then
+#    echo "Submitting job to cluster"
+#    ./submit_interFlow.sh
+# Run locally
+#else
+#    cd ${0%/*} || exit 1                        # Run from this directory
+#    . $WM_PROJECT_DIR/bin/tools/RunFunctions    # Tutorial run functions
 #
-#runApplication decomposePar
+#    # Run in serial
+#    runApplication -s growingDroplet2D.o interFlow
+#fi
 #------------------------------------------------------------------------------
 

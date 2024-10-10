@@ -1,0 +1,81 @@
+monitorContactAngle
+{
+    name    monitorContactAngle;
+    type    coded;
+    libs    (utilityFunctionObjects);
+
+    codeExecute
+    #{
+        Info<< "Monitoring contact angles" << endl;
+        const volScalarField& clangle =
+            mesh().lookupObject<volScalarField>("clangle");
+
+        // Get boundary patch field with hysteresis BC
+        // For now, use hardcoded patch name
+        auto patchIndex = mesh().boundary()["bottomRemainder"].index();
+        const auto& patchClangle = clangle.boundaryField()[patchIndex];
+
+        // Compute contact angle metrics
+        scalar clMin = 180;
+        scalar clMax = 0;
+        scalar clMean = 0;
+        uLabel nCLFaces = 0;
+
+        forAll(patchClangle, I)
+        {
+            scalar ca = patchClangle[I];
+
+            // Zero indicates a face without contact line, thus skip it.
+            if (ca == 0.0)
+            {
+                continue;
+            }
+
+            clMin = ca < clMin ? ca : clMin;
+            clMax = ca > clMax ? ca : clMax;
+            clMean += ca;
+            ++nCLFaces;
+        }
+
+        // Now, only continue on the main MPI process
+        reduce(clMin, minOp<scalar>());
+        reduce(clMax, maxOp<scalar>());
+        reduce(clMean, sumOp<scalar>());
+        reduce(nCLFaces, sumOp<uLabel>());
+
+        if (nCLFaces > 0)
+        {
+            clMean /= nCLFaces;
+        }
+
+        // Compute variation in contact angle
+        scalar varSum = 0.0;
+        forAll(patchClangle, I)
+        {
+            scalar ca = patchClangle[I];
+
+            // Zero indicates a face without contact line, thus skip it.
+            if (ca == 0.0)
+            {
+                continue;
+            }
+            
+            varSum += (ca - clMean)*(ca - clMean);
+        }
+        reduce(varSum, sumOp<scalar>());
+
+        scalar clDev = -1.0;
+
+        if (nCLFaces > 0)
+        {
+            clDev = sqrt(varSum/nCLFaces);
+        }
+
+        auto time = mesh().time().timeOutputValue();
+
+        Info<< "time, clMin, clMean, clDev, clMax, nCLcells" << nl
+            << "+++, " << time << ", "
+            << clMin << ", " << clMean << ", " << clDev << ", "
+            << clMax << ", " << nCLFaces << endl;
+    #};
+}

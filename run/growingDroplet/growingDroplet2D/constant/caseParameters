@@ -1,0 +1,5 @@
+// Parameters which are are varied as part of parameter studies
+resolutionHeight        50;
+useCurvatureFromTrace   off;
+inletFraction           1;
+advancingCA             80;

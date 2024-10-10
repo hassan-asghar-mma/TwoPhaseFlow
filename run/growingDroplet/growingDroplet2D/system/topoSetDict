@@ -57,12 +57,20 @@ actions
 (
     // Select the bottom patch on which the droplet is sitting and extract
     // a square set around the droplet centre to use as inlet.
+
     {
-        name    inletFaces;
+        name    bottomFaces;
         type    faceSet;
         action  new;
         source  patchToFace;
         patch   bottom;
+    }
+    {
+        name    inletFaces;
+        type    faceSet;
+        action  new;
+        source  faceToFace;
+        set     bottomFaces;
     }
     {
         name    inletFaces;
@@ -96,6 +104,16 @@ actions
         action  subtract;
         source  faceToFace;
         set     inletFaces;
+    }
+
+    // The entire bottom area is required to correctly compute the wetted
+    // area. Thus, save the bottom faces as face zone for this purpose.
+    {
+        name    bottomFaces;
+        type    faceZoneSet;
+        action  new;
+        source  setToFaceZone;
+        faceSet bottomFaces;
     }
 );
 

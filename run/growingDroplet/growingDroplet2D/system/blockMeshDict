@@ -14,6 +14,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// Some parameters are defined in a separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
+
 // Length given here are in millimeter
 scale   0.001;
 
@@ -21,12 +25,16 @@ scale   0.001;
 L   5;
 H   2.5;
 
-// Resolution in each direction
-nl  100;
-nh  50;
+// Resolution in each direction (nl x nh)
+//  - coarse: 50x25
+//  - medium: 100x50
+//  - fine:   200x100 
+nh  $resolutionHeight;
+nl  #eval{2*$nh};
 
 // W (y-direction) is used as empty direction for 2D
-W   #eval {$L / $nl};   
+// Fixed depth for simpler computation of inflow rate for U
+W   50.0e-3;   
 
 vertices
 (

@@ -1,0 +1,3 @@
+#Command to make the parametric case studies
+
+./createStudy.py -s test2D -c growingDroplet2D/ -p fdtPlicInvestigation2D.parameter

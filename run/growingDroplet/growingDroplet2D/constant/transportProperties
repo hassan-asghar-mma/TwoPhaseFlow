@@ -15,6 +15,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// Some parameters are defined in a separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
+
 phases (oil air);
 
 oil
@@ -37,7 +41,7 @@ surfaceForces
 {
     sigma $sigma;
     surfaceTensionForceModel    RDF; // RDF; //fitParaboloid RDF
-    curvFromTr                  off;
+    curvFromTr                  $useCurvatureFromTrace;
     accelerationForceModel      gravity;
     deltaFunctionModel          alphaCSF;
 }

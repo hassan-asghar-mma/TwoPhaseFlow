@@ -15,6 +15,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// Some parameters are defined in a separate file to enable simpler parameter
+// variation.
+#include "<constant>/caseParameters"
+
 application     interFlow;
 
 startFrom       latestTime;
@@ -23,17 +27,17 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1;
+endTime         #eval{1.0/$inletFraction};
 
 deltaT          1.0e-5;
 
 writeControl    timeStep;
 
-writeInterval   100;
+writeInterval   1000;
 
 purgeWrite      0;
 
-writeFormat     ascii;
+writeFormat     binary;
 
 writePrecision  14;
 
@@ -57,7 +61,6 @@ maxCapillaryNum 0.0002; //0.5;
 
 libs
 (
-    "libtwoPhaseProperties.so"
     "libdynContactAngleModels.so"
 );
 
@@ -66,17 +69,17 @@ OptimisationSwitches
 
       //- Parallel IO file handler
       // uncollated (default), collated or masterUncollated
-      fileHandler collated;
+      //fileHandler collated;
 
       //- collated: thread buffer size for queued file writes.
       // If set to 0 or not sufficient for the file size threading is not used.
       // Default: 2e9
-      maxThreadFileBufferSize 2e9;
+      //maxThreadFileBufferSize 2e9;
 
       //- masterUncollated: non-blocking buffer size.
       // If the file exceeds this buffer size scheduled transfer is used.
       // Default: 2e9
-      maxMasterFileBufferSize 2e9;
+      //maxMasterFileBufferSize 2e9;
 }
 
 
@@ -138,22 +141,58 @@ functions
             }
         }
     }
+
+    // Compute wetted area and droplet volume
     wettedArea
     {
-	type wettedArea;
-	libs ("libwettedAreaFunctionObject.so");
-	phaseIndicator alpha.oil;
-	patchName bottom;
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory entries (runtime modifiable)
+        fields          (alpha.oil);
+        operation       areaIntegrate;
+        regionType      faceZone;
+        name            bottomFaces;
+
+        // Optional entries (runtime modifiable)
+        postOperation   none;
+        weightField     none;
+        // The pseudo 2D mesh does not have unit depth;
+        // This factor compensates this.
+        scaleFactor     2.0e4;
+        writeArea       false;
+        surfaceFormat   none;
+        writeFields     no;
+
+        // Only execute evaluation every 10th time step
+        executeControl  timeStep;
+        executeInterval 10;
+    }
+    dropletVolume
+    {
+        // Mandatory entries (unmodifiable)
+        type            volFieldValue;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory entries (runtime modifiable)
+        fields          (alpha.oil);
+        operation       volIntegrate;
+        regionType      all;
+
+        // Optional entries (runtime modifiable)
+        postOperation   none;
+        weightField     none;
+        scaleFactor     1.0;
+        writeFields     no;
+
+        // Only execute evaluation every 10th time step
+        executeControl  timeStep;
+        executeInterval 10;
     }
 
-    //contactAngleEvaluation
-    //{
-    // 	type contactAngleEvaluation;
-    //    libs ("libcontactAngleEvaluationFunctionObject.so");
-    //    phaseIndicator alpha.oil;
-    //    centre (@!dropCx!@ @!dropCy!@ @!dropCz!@);
-    //}
-
+    // Monitor contact angle over time
+    #include  "monitorContactAngle"
 }
 // ************************************************************************* //
 

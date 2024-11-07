@@ -1,0 +1,7 @@
+CoxVoinov/dynamicAlphaContactAngleCoxVoinovFvPatchScalarField.C
+Bracke/dynamicAlphaContactAngleBrackeFvPatchScalarField.C
+Kistler/dynamicAlphaContactAngleKistlerFvPatchScalarField.C
+Jiang/dynamicAlphaContactAngleJiangFvPatchScalarField.C
+Hoffmann_Voinov_Tanner/dynamicAlphaContactAngleHoffmannFvPatchScalarField.C
+
+LIB = $(FOAM_USER_LIBBIN)/libdcaModels

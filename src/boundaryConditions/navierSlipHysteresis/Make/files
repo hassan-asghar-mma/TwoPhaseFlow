@@ -1,0 +1,4 @@
+navierSlipHysteresis.C
+
+
+LIB = $(FOAM_USER_LIBBIN)/libnavierSlipHysteresis

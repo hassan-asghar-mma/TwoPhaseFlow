@@ -58,7 +58,7 @@ Foam::navierSlipHysteresis<Type>::navierSlipHysteresis
 :
     parent_bctype(p, iF),
     refValue_(p.size(), Zero),
-    valueFraction_(p.size(), 1.0),
+    slipLength_(p.size(), 0.0001),
     gamma_(0.0),
     writeValue_(false)
 {}
@@ -75,7 +75,7 @@ Foam::navierSlipHysteresis<Type>::navierSlipHysteresis
 :
     parent_bctype(ptf, p, iF, mapper),
     refValue_(ptf.refValue_, mapper),
-    valueFraction_(ptf.valueFraction_, mapper),
+    slipLength_(ptf.slipLength_, mapper),
     gamma_(ptf.gamma_),
     writeValue_(ptf.writeValue_)
 {}
@@ -91,7 +91,7 @@ Foam::navierSlipHysteresis<Type>::navierSlipHysteresis
 :
     parent_bctype(p, iF),
     refValue_(p.size(), Zero),
-    valueFraction_("valueFraction", dict, p.size()),
+    slipLength_("slipLength", dict, p.size()),
     gamma_(dict.get<scalar>("gamma")),
     writeValue_(dict.getOrDefault("writeValue", false))
 {
@@ -112,7 +112,7 @@ Foam::navierSlipHysteresis<Type>::navierSlipHysteresis
 :
     parent_bctype(ptf),
     refValue_(ptf.refValue_),
-    valueFraction_(ptf.valueFraction_),
+    slipLength_(ptf.slipLength_),
     gamma_(ptf.gamma_),
     writeValue_(ptf.writeValue_)
 {}
@@ -127,7 +127,7 @@ Foam::navierSlipHysteresis<Type>::navierSlipHysteresis
 :
     parent_bctype(ptf, iF),
     refValue_(ptf.refValue_),
-    valueFraction_(ptf.valueFraction_),
+    slipLength_(ptf.slipLength_),
     gamma_(ptf.gamma_),
     writeValue_(ptf.writeValue_)
 {}
@@ -232,13 +232,12 @@ Foam::scalarField Foam::navierSlipHysteresis<Type>::computeValueFraction() const
     scalarField fValues = fStress(tangentialStress, gamma, 1.0, x_s, 2);
 
     // Compute valueFraction
-    scalar slipLength = 0.0001;
     scalar d = 0.0001;  // Cell size
     scalarField valueFraction(patch.size());
 
     forAll(valueFraction, i)
     {
-        valueFraction[i] = d / (d + (2 * slipLength * fValues[i]));
+        valueFraction[i] = d / (d + (2 * slipLength[i] * fValues[i]));
     }
 
     return valueFraction;
@@ -253,7 +252,7 @@ void Foam::navierSlipHysteresis<Type>::autoMap
 {
     parent_bctype::autoMap(m);
     refValue_.autoMap(m);
-    valueFraction_.autoMap(m);
+    slipLength_.autoMap(m);
 }
 
 
@@ -270,7 +269,7 @@ void Foam::navierSlipHysteresis<Type>::rmap
         refCast<const navierSlipHysteresis<Type>>(ptf);
 
     refValue_.rmap(dmptf.refValue_, addr);
-    valueFraction_.rmap(dmptf.valueFraction_, addr);
+    slipLength_.rmap(dmptf.slipLength_, addr);
 }
 
 
@@ -459,7 +458,7 @@ void Foam::navierSlipHysteresis<Type>::write(Ostream& os) const
 {
     this->parent_bctype::write(os);
     refValue_.writeEntry("refValue", os);
-    valueFraction_.writeEntry("valueFraction", os);
+    slipLength_.writeEntry("slipLength", os);
 
     if (writeValue_)
     {

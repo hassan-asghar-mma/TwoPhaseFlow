@@ -39,7 +39,7 @@ Usage
       Property      | Description                     | Reqd | Default
       type          | Type name: partialSlip          | yes  | -
       refValue      | Reference value at zero slip    | no   | 0
-      valueFraction | Fraction of refValue used for boundary [0-1] | yes |
+      slipLength    | Slip length value               | yes  |
       writeValue    | Output patch value (eg, ParaView) | no | false
     \endtable
 
@@ -48,8 +48,8 @@ Usage
     <patchName>
     {
         type            partialSlip;
-        refValue        uniform 0.001;
-        valueFraction   uniform 0.1;
+        refValue        uniform 0.0001;
+        slipLength      uniform 0.0001;
         value           uniform 0;
     }
     \endverbatim
@@ -91,7 +91,7 @@ class navierSlipHysteresis
         Field<Type> refValue_;
 
         //- Fraction (0-1) of value used for boundary condition
-        scalarField valueFraction_;
+        scalarField slipLength_;
 
         //- Flag to output patch values (e.g. for ParaView)
         bool writeValue_;
@@ -184,14 +184,14 @@ public:
                 return refValue_;
             }
 
-            virtual scalarField& valueFraction()
+            virtual scalarField& slipLength()
             {
-                return valueFraction_;
+                return slipLength_;
             }
 
-            virtual const scalarField& valueFraction() const
+            virtual const scalarField& slipLength() const
             {
-                return valueFraction_;
+                return slipLength_;
             }
 
             virtual scalar& gamma()

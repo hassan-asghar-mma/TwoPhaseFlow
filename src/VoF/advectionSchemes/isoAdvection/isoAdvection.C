@@ -276,6 +276,7 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
 
                     if (isDownwindFace)
                     {
+                        Info << "\nCalling from time integrated flux isDownwindFace \n "; 
                         dVfIn[facei] = advectFace_.timeIntegratedFaceFlux
                         (
                             facei,
@@ -326,7 +327,7 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
             if (phiP >= 0)
             {
                 const scalar magSf = magSfb[patchi][patchFacei];
-
+                Info << "\nCalling from time integrated boundary face flux isDownwindFace \n ";
                 dVfb[patchi][patchFacei] = advectFace_.timeIntegratedFaceFlux
                 (
                     facei,
@@ -398,6 +399,7 @@ Foam::scalar Foam::advection::isoAdvection::netFlux
     const label celli
 ) const
 {
+    Info << "Inside netFlux function\n";
     scalar dV = 0;
 
     // Get face indices

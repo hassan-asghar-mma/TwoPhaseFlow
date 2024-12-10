@@ -1,8 +1,10 @@
 {
 // Update alpha1
 #include "alphaSuSp.H"
+Info << "Calling advect\n";
 advector->advect(Sp,(Su + divU*min(alpha1(), scalar(1)))());
 // advector->advect();
+Info << "Called advect\n";
 #include "rhofs.H"
 rhoPhi = advector->getRhoPhi(rho1f, rho2f);
 

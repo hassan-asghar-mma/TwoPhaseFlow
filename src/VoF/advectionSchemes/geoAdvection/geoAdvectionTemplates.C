@@ -222,6 +222,8 @@ void Foam::advection::geoAdvection::boundFlux
     const SuType& Su
 )
 {
+    Info << "Inside boundFlux function in geo\n";
+
     DebugInFunction << endl;
 
     correctedFaces.clear();
@@ -371,6 +373,8 @@ void Foam::advection::geoAdvection::advect
     const SuType& Su
 )
 {
+    Info << "Inside advect function in geo\n";
+
     if (fv::localEulerDdt::enabled(mesh_))
     {
         const volScalarField& rDeltaT = fv::localEulerDdt::localRDeltaT(mesh_);

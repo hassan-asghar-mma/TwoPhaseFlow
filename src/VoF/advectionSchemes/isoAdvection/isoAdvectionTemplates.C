@@ -224,6 +224,7 @@ void Foam::advection::isoAdvection::boundFlux
     const SuType& Su
 )
 {
+    Info << "Inside boundFlux function in isoAdvectionTemplates start\n";
     addProfilingInFunction(geometricVoF);
     DebugInFunction << endl;
     scalar rDeltaT = 1/mesh_.time().deltaTValue();
@@ -368,7 +369,7 @@ void Foam::advection::isoAdvection::boundFlux
             }
         }
     }
-
+    Info << "Inside boundFlux function in isoAdvectionTemplates end\n";
     DebugInfo << "correctedFaces = " << correctedFaces << endl;
 }
 
@@ -376,6 +377,7 @@ void Foam::advection::isoAdvection::boundFlux
 template<class SpType, class SuType>
 void Foam::advection::isoAdvection::advect(const SpType& Sp, const SuType& Su)
 {
+    Info << "Inside advect function in isoAdvectionTemplates start\n";
     addProfilingInFunction(geometricVoF);
     DebugInFunction << endl;
 
@@ -445,6 +447,7 @@ void Foam::advection::isoAdvection::advect(const SpType& Sp, const SuType& Su)
         << "%" << endl;
 
     alphaPhi_ = dVf_/mesh_.time().deltaT();
+    Info << "Inside advect function in isoAdvectionTemplates end\n";
 }
 
 

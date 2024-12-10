@@ -196,7 +196,26 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
 )
 {
     clearStorage();
+    label patchi = 0;
 
+    for (label patchID = 0; patchID < mesh_.boundaryMesh().size(); ++patchID)
+    {
+        const auto patch = mesh_.boundaryMesh()[patchID];
+        const label patchStart = patch.start();
+        const label patchEnd = patchStart + patch.size();
+
+        // Check if the face ID falls within this patch's range
+        if (faceI >= patchStart && faceI < patchEnd)
+        {
+            patchi = patchID;
+        }
+    }
+
+    const polyBoundaryMesh& boundaryMesh = mesh_.boundaryMesh();
+    const label start = boundaryMesh[patchi].start();
+
+    if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+        Info << "\nStart cutFaceAdvect->TimeIntegratedFaceFlux:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
 /* Temporarily taken out
     // Treating rare cases where isoface normal is not calculated properly
     if (mag(n0) < 0.5)
@@ -265,9 +284,9 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
         }
         else if (nShifts >  2) // triangle decompose the non planar face
         {
-            const pointField fPts(f.points(mesh_.points()));
-            pointField fPts_tri(3);
-            scalarField pTimes_tri(3);
+            const pointField fPts(f.points(mesh_.points())); //physical coordinates of the face vertices
+            pointField fPts_tri(3); //Holds the vertices of the current triangular segment being processed.
+            scalarField pTimes_tri(3); //Stores the arrival times for the vertices of this triangle.
             fPts_tri[0] = mesh_.faceCentres()[faceI];
             pTimes_tri[0] = ((fPts_tri[0] - x0) & n0)/Un0;
             scalar area = 0;
@@ -277,7 +296,7 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedFaceFlux
                 pTimes_tri[1] = pTimes_[pi];
                 fPts_tri[2] = fPts[(pi + 1) % nPoints];
                 pTimes_tri[2] = pTimes_[(pi + 1) % nPoints];
-                const scalar magSf_tri =
+                const scalar magSf_tri = // area of the sub-triangle
                     mag
                     (
                         0.5
@@ -388,6 +407,7 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedArea
     const scalar Un0
 )
 {
+    Info << "\nInside timeIntgeratedArea-1 " <<"\n";
     // Initialise time integrated area returned by this function
     scalar tIntArea = 0.0;
 
@@ -582,6 +602,27 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
     const scalar cutValue
 )
 {
+    
+    label patchi = 0;
+
+    for (label patchID = 0; patchID < mesh_.boundaryMesh().size(); ++patchID)
+    {
+        const auto patch = mesh_.boundaryMesh()[patchID];
+        const label patchStart = patch.start();
+        const label patchEnd = patchStart + patch.size();
+
+        // Check if the face ID falls within this patch's range
+        if (faceI >= patchStart && faceI < patchEnd)
+        {
+            patchi = patchID;
+        }
+    }
+
+    const polyBoundaryMesh& boundaryMesh = mesh_.boundaryMesh();
+    const label start = boundaryMesh[patchi].start();
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nStart cutFaceAdvect -> calcSubFace:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
     // clearStorage();
     const face& f = mesh_.faces()[faceI];
     label inLiquid = 0;
@@ -634,6 +675,9 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
         subFaceArea_
     );
 
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nEnd cutFaceAdvect -> calcSubFace:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
     return faceStatus_;
 }
 
@@ -646,6 +690,26 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedArea
     const scalar Un0
 )
 {
+        label patchi = 0;
+
+    for (label patchID = 0; patchID < mesh_.boundaryMesh().size(); ++patchID)
+    {
+        const auto patch = mesh_.boundaryMesh()[patchID];
+        const label patchStart = patch.start();
+        const label patchEnd = patchStart + patch.size();
+
+        // Check if the face ID falls within this patch's range
+        if (faceI >= patchStart && faceI < patchEnd)
+        {
+            patchi = patchID;
+        }
+    }
+
+    const polyBoundaryMesh& boundaryMesh = mesh_.boundaryMesh();
+    const label start = boundaryMesh[patchi].start();
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nStart cutFaceAdvect -> timeIntegratedArea:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
     // Initialise time integrated area returned by this function
     scalar tIntArea = 0.0;
 
@@ -775,6 +839,9 @@ Foam::scalar Foam::cutFaceAdvect::timeIntegratedArea
         tIntArea += magSf * (dt - lastTime) * pos0(Un0);
     }
 
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nEnd cutFaceAdvect -> timeIntegratedArea:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
     return tIntArea;
 }
 

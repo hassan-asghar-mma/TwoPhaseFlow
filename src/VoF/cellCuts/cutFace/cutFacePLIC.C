@@ -56,6 +56,28 @@ Foam::label Foam::cutFacePLIC::calcSubFace
     const vector& base
  )
 {
+    label patchi = 0;
+
+    for (label patchID = 0; patchID < mesh_.boundaryMesh().size(); ++patchID)
+    {
+        const auto patch = mesh_.boundaryMesh()[patchID];
+        const label patchStart = patch.start();
+        const label patchEnd = patchStart + patch.size();
+
+        // Check if the face ID falls within this patch's range
+        if (faceI >= patchStart && faceI < patchEnd)
+        {
+            patchi = patchID;
+        }
+    }
+
+    const polyBoundaryMesh& boundaryMesh = mesh_.boundaryMesh();
+    const label start = boundaryMesh[patchi].start();
+
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nStart cutFacePLIC -> calcSubFace:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
+
     clearStorage();
 
     const face& f = mesh_.faces()[faceI];
@@ -111,6 +133,9 @@ Foam::label Foam::cutFacePLIC::calcSubFace
         subFaceArea_
     );
 
+
+    // if (!mesh_.isInternalFace(faceI) && mesh_.boundaryMesh()[patchi].name() =="bottom")
+    //     Info << "\nEnd cutFacePLIC -> calcSubFace:\t Patch:\t" << mesh_.boundaryMesh()[patchi].name() << "\nhas the global face:\t" << faceI << "\nand local face:\t" << faceI-start << "\n";
     return faceStatus_;
 }
 

@@ -47,7 +47,7 @@ SourceFiles
 #include "fvMesh.H"
 #include "surfaceFields.H"
 #include "volFields.H"
-
+#include <unordered_map>
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 namespace Foam
@@ -133,6 +133,24 @@ public:
 
     // Static Data
     static int debug;
+
+    static int timeIndex_;
+    
+    // Static map: Key is face ID, value is a list of intersection points
+        static std::unordered_map<label, std::vector<point>> faceIntersectionsMap;
+
+    // Function to calculate and store intersections
+    static void storeAndCalculateIntersections(
+        label faceI,
+        const scalarList& pointStatus,
+        const pointField& points,
+        const face& f,
+        DynamicList<point>& subFacePoints,
+        DynamicList<point>& surfacePoints,
+        label firstFullySubmergedPoint
+    );
+            
+    static std::vector<double> pOld;
 
 
     // Constructors

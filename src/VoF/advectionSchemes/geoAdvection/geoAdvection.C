@@ -202,6 +202,7 @@ Foam::scalar Foam::advection::geoAdvection::netFlux
     const label celli
 ) const
 {
+    Info << "Inside netFlux function in geo\n";
     scalar dV = 0;
 
     // Get face indices

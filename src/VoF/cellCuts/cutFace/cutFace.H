@@ -137,10 +137,12 @@ public:
     static int timeIndex_;
     
     // Static map: Key is face ID, value is a list of intersection points
-        static std::unordered_map<label, std::vector<point>> faceIntersectionsMap;
+   static std::unordered_map<std::string, std::unordered_map<Foam::label, std::unordered_map<Foam::label, Foam::point>>> faceIntersectionsMap;
+   static std::unordered_map<Foam::label, std::vector<std::pair<Foam::point, Foam::point>>> patchEdges;
 
     // Function to calculate and store intersections
     static void storeAndCalculateIntersections(
+        const fvMesh& mesh_,
         label faceI,
         const scalarList& pointStatus,
         const pointField& points,
@@ -148,6 +150,18 @@ public:
         DynamicList<point>& subFacePoints,
         DynamicList<point>& surfacePoints,
         label firstFullySubmergedPoint
+    );
+
+    static bool faceInMap
+    (
+        label faceI,
+        std::unordered_map<Foam::label, std::vector<Foam::point>> faceIntersectionsMap
+    );
+
+    void extractPatchEdges
+    (
+        const std::string& patchName,
+        std::unordered_map<label, std::vector<std::pair<point, point>>>& patchEdges
     );
             
     static std::vector<double> pOld;

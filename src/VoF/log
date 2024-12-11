@@ -1,0 +1,20 @@
+wmake libso (VoF)
+Making dependencies: geoAdvection.C
+Making dependencies: isoAdvection.C
+Making dependencies: wettingPlicRdf.C
+Making dependencies: plicRDF.C
+Making dependencies: gradAlpha.C
+Making dependencies: isoSurface.C
+Making dependencies: isoAlpha.C
+Making dependencies: reconstructionSchemes.C
+Making dependencies: surfaceIteratorIso.C
+Making dependencies: surfaceIteratorPLIC.C
+Making dependencies: cutFaceImpFunc.C
+Making dependencies: cutFaceIso.C
+Making dependencies: cutFaceAdvect.C
+Making dependencies: cutFacePLIC.C
+Making dependencies: cutFace.C
+Making dependencies: cutCellImpFunc.C
+Making dependencies: cutCellIso.C
+Making dependencies: cutCellPLIC.C
+g++ -std=c++14 -m64 -pthread -DOPENFOAM=2312 -DWM_DP -DWM_LABEL_SIZE=32 -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor -Wno-unused-parameter -Wno-invalid-offsetof -Wno-attributes -Wno-unknown-pragmas -O3  -DNoRepository -ftemplate-depth-100  -I/home/asghar/OpenFOAM/OpenFOAM-v2312/applications/utilities/preProcessing/setAlphaField/alphaFieldFunctions/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/finiteVolume/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/fileFormats/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/surfMesh/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/meshTools/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/fileFormat/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/transportModels/interfaceProperties/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/transportModels/twoPhaseProperties/lnInclude -iquote. -IlnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/OpenFOAM/lnInclude -I/home/asghar/OpenFOAM/OpenFOAM-v2312/src/OSspecific/POSIX/lnInclude   -fPIC -c cellCuts/cutCell/cutCellPLIC.C -o Make/linux64GccDPInt32Opt/cellCuts/cutCell/cutCellPLIC.o

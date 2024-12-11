@@ -33,12 +33,89 @@ License
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
 int Foam::cutFace::debug = 0;
-std::vector<double> Foam::cutFace::pOld = {0.0, 0.0, 0.0};
-std::unordered_map<Foam::label, std::vector<Foam::point>> Foam::cutFace::faceIntersectionsMap;
+//std::unordered_map<Foam::label, std::vector<Foam::point>> Foam::cutFace::faceIntersectionsMap;
+std::unordered_map<std::string, std::unordered_map<Foam::label, std::unordered_map<Foam::label, Foam::point>>> Foam::cutFace::faceIntersectionsMap;
+std::unordered_map<Foam::label, std::vector<std::pair<Foam::point, Foam::point>>> Foam::cutFace::patchEdges;
+
 int Foam::cutFace::timeIndex_ = -100;
 // * * * * * * * * * * * * * Protected Member Functions  * * * * * * * * * * *
 
+bool Foam::cutFace::faceInMap(label faceI,std::unordered_map<Foam::label, std::vector<Foam::point>> faceIntersectionsMap)
+{   
+    return faceIntersectionsMap.find(faceI) != faceIntersectionsMap.end();
+}
+
+//Extracting all the edges of the patch
+//Needed to remove the repition during saving of all intersection points in bottom patch
+// Idea is to check if the edge from other patches coincidde with edge of this container, do not calculate the intersection point
+// rather just retrieve the priously calculated intersection point : avind repition and make sure that other patches also have the same intersection points for bottom faces
+// is used in storeAndCalculateIntersections function
+void Foam::cutFace::extractPatchEdges
+(
+    const std::string& patchName,
+    std::unordered_map<label, std::vector<std::pair<point, point>>>& patchEdges
+)
+{
+    // Check if the map is already filled
+    if (!patchEdges.empty())
+    {
+        return; // Skip if the edges are already extracted
+    }
+
+    // Locate the patch by name
+    label patchID = -1;
+    for (label i = 0; i < mesh_.boundaryMesh().size(); ++i)
+    {
+        if (mesh_.boundaryMesh()[i].name() == patchName)
+        {
+            patchID = i;
+            break;
+        }
+    }
+
+    // Access the specified patch
+    const auto& patch = mesh_.boundaryMesh()[patchID];
+    const pointField& points = mesh_.points();
+
+    // Iterate through faces of the patch
+    for (label localFaceID = 0; localFaceID < patch.size(); ++localFaceID)
+    {
+        // Get global face ID
+        label globalFaceID = patch.start() + localFaceID;
+
+        const face& patchFace = mesh_.faces()[globalFaceID];
+
+        // Debug: Output points of the face
+        Info << "Global Face ID: " << globalFaceID << " Points: ";
+        for (label i = 0; i < patchFace.size(); ++i)
+        {
+            const point& p = points[patchFace[i]];
+            Info << "(" << p.x() << ", " << p.y() << ", " << p.z() << ") ";
+        }
+        Info << endl;
+
+        // Construct edges for the face
+        for (label i = 0; i < patchFace.size(); ++i)
+        {
+            label startIdx = patchFace[i];                       // Global start index
+            label endIdx = patchFace[(i + 1) % patchFace.size()]; // Global end index
+
+            const point& startPoint = points[startIdx];
+            const point& endPoint = points[endIdx];
+
+            // Debug: Output each edge
+            Info << "Edge: (" << startPoint.x() << ", " << startPoint.y() << ", " << startPoint.z() << ") -> "
+                 << "(" << endPoint.x() << ", " << endPoint.y() << ", " << endPoint.z() << ")" << endl;
+
+            // Add edge to the map using the global face ID
+            patchEdges[globalFaceID].emplace_back(startPoint, endPoint);
+        }
+    }
+}
+
+
 void Foam::cutFace::storeAndCalculateIntersections(
+    const fvMesh& mesh_,
     label faceI,
     const scalarList& pointStatus,
     const pointField& points,
@@ -48,11 +125,41 @@ void Foam::cutFace::storeAndCalculateIntersections(
     label firstFullySubmergedPoint
 )
 {
-    std::vector<point> intersectionPoints;
+
+    label patchi = 0;
+    label bottomPatchId = 0;
+
+    for (label patchID = 0; patchID < mesh_.boundaryMesh().size(); ++patchID)
+    {
+        const auto patch = mesh_.boundaryMesh()[patchID];
+        const label patchStart = patch.start();
+        const label patchEnd = patchStart + patch.size();
+        if (mesh_.boundaryMesh()[patchID].name()=="bottom")
+        {
+            bottomPatchId = patchID;
+        }
+
+        // Check if the face ID falls within this patch's range
+        if (faceI >= patchStart && faceI < patchEnd)
+        {
+            patchi = patchID;
+        }
+    }
+
+    const polyBoundaryMesh& boundaryMesh = mesh_.boundaryMesh();
+    const label start = boundaryMesh[patchi].start();
+    word patchName = mesh_.boundaryMesh()[patchi].name();
+
+    
+
+    Info << "#########################################\n";
+    // Info << "For face " << faceI << " with local face id " << faceI - start 
+    //         <<  " in the patch " << patchName << " I will be running for " << f.size()- firstFullySubmergedPoint << " times \n";
 
     // Loop starting at firstFullySubmergedPoint
     for (label i = firstFullySubmergedPoint; i < firstFullySubmergedPoint + f.size(); ++i)
     {
+        
         label idx = i % f.size();
         label nextIdx = (i + 1) % f.size();
 
@@ -64,14 +171,61 @@ void Foam::cutFace::storeAndCalculateIntersections(
         // Append cut points
         else if (pointStatus[idx] == 0)
         {
+            Info << "\n" << i << " ith iteration: \n cut point status in first else if is the interface is on vertex " << points[f[idx]] << endl;
             subFacePoints.append(points[f[idx]]);
             surfacePoints.append(points[f[idx]]);
         }
 
+        // Check if this edge coincides with a bottom patch edge
+        bool isBottomAdjacent = false;
+
+        // Skip saving intersection points for non-bottom patches unless edges coincide with the bottom patch
+        if (patchName != "bottom")
+        {
+            for (const auto& bottomFaceEntry : patchEdges)
+            {
+                for (const auto& edge : bottomFaceEntry.second)
+                {
+                    // Compare edges (direct and reversed)
+                    if ((edge.first == points[f[idx]] && edge.second == points[f[nextIdx]]) ||
+                        (edge.first == points[f[nextIdx]] && edge.second == points[f[idx]]))
+                    {
+                        isBottomAdjacent = true;
+                        break;
+                    }
+                }
+                if (isBottomAdjacent)
+                {
+                    break;
+                }
+            }
+        }
+
+
+        point intersection;
+
+        //If the intersection point is already present in the map
+        //Check for the presence of patch, patch face, and then corresponding intersection point
+        if (faceIntersectionsMap.find(patchName) != faceIntersectionsMap.end() &&
+            faceIntersectionsMap[patchName].find(faceI) != faceIntersectionsMap[patchName].end() &&
+            faceIntersectionsMap[patchName][faceI].find(idx) != faceIntersectionsMap[patchName][faceI].end())
+        {
+            // Use the stored intersection point
+            intersection = faceIntersectionsMap[patchName][faceI][idx];
+            subFacePoints.append(intersection);
+            surfacePoints.append(intersection);
+            Info << "Retrieved intersection for Patch: " << patchName
+                 << ", Face: " << faceI << ", Edge: " << idx
+                 << ": " << intersection << endl;
+            continue; // Skip to the next edge
+        }   
+
+        // The intersection point is not present in the map and should calculated and stored 
         // Calculate intersection points for edges
         if (
             (pointStatus[idx] < 0 && pointStatus[nextIdx] > 0) ||
-            (pointStatus[idx] > 0 && pointStatus[nextIdx] < 0))
+            (pointStatus[idx] > 0 && pointStatus[nextIdx] < 0)
+            )
         {
             // Compute intersection point on the edge
             label nextP = f.nextLabel(idx);
@@ -79,19 +233,53 @@ void Foam::cutFace::storeAndCalculateIntersections(
             scalar weight = (0.0 - pointStatus[idx]) /
                             (pointStatus[nextIdx] - pointStatus[idx]);
 
-            point intersection = points[f[idx]] + weight * dir;
+            intersection = points[f[idx]] + weight * dir;
+            Info << "Computed intersection for Patch: " << patchName
+                 << ", Face: " << faceI << ", Edge: " << idx
+                 << ": " << intersection << endl;
 
-            // Store the intersection point
-            intersectionPoints.push_back(intersection);
+            // Store the intersection point in the map if relevant
+            if (patchName == "bottom" || isBottomAdjacent)
+            {
+                faceIntersectionsMap[patchName][faceI][idx] = intersection;
+            }
+
 
             // Append intersection points to subFacePoints and surfacePoints
             subFacePoints.append(intersection);
             surfacePoints.append(intersection);
+
+            // Save the intersection point to the map
+            //Info << "Surface points: " <<surfacePoints  << endl;
+
+
         }
     }
 
+    // if(faceIntersectionsMap.empty())
+    // {
+    //     Info << "The container is empty" << endl;
+    //     faceIntersectionsMap[faceI] = intersectionPoints;
+    // }
     // Store the intersections in the static map
-    faceIntersectionsMap[faceI] = intersectionPoints;
+    if (!faceIntersectionsMap[patchName][faceI].empty())
+    {   
+        Info << "#########################################\n";
+        Info << "Face ID: " << faceI << ", Patch: " << patchName << endl;
+        Info << "SurfacePoints are:" << "\n__________________________" << "\n"  << surfacePoints << endl;
+        Info << "Intersection Points: ";
+        for (const auto& edgePoint : faceIntersectionsMap[patchName][faceI])
+        {
+            Info << "\nEdge Index " << edgePoint.first << ": "
+                 << "(" << edgePoint.second.x() << ", "
+                 << edgePoint.second.y() << ", "
+                 << edgePoint.second.z() << ")";
+                 
+        }
+        Info << "\n#########################################\n";
+    }
+
+
 }
 
 
@@ -118,11 +306,11 @@ void Foam::cutFace::calcSubFace
         return;
     }
 
-    // Call the function to calculate and store intersections
-    storeAndCalculateIntersections(faceI, pointStatus, points, f, subFacePoints, surfacePoints, firstFullySubmergedPoint);
+    //Compute the bottom patch edges
+    extractPatchEdges("bottom", patchEdges);
 
-    // Retrieve stored intersections (optional, for debugging or post-processing)
-    const std::vector<point>& intersections = faceIntersectionsMap[faceI];
+    // Call the function to calculate and store intersections
+    storeAndCalculateIntersections(mesh_, faceI, pointStatus, points, f, subFacePoints, surfacePoints, firstFullySubmergedPoint);
 
     // Additional logic for sub-face area and center
     if (subFacePoints.size() >= 3)

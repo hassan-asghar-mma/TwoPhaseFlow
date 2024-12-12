@@ -137,9 +137,11 @@ public:
     static int timeIndex_;
     
     // Static map: Key is face ID, value is a list of intersection points
-   static std::unordered_map<std::string, std::unordered_map<Foam::label, std::unordered_map<Foam::label, Foam::point>>> faceIntersectionsMap;
+   //static std::unordered_map<std::string, std::unordered_map<Foam::label, std::unordered_map<Foam::label, Foam::point>>> faceIntersectionsMap;
+   //static std::unordered_map<std::string, std::unordered_map<Foam::label, std::map<std::pair<Foam::point, Foam::point>, Foam::point>>> faceIntersectionsMap;
+   
    static std::unordered_map<Foam::label, std::vector<std::pair<Foam::point, Foam::point>>> patchEdges;
-
+   bool isBottomAdjacent(const Foam::point& edgeStart, const Foam::point& edgeEnd);
     // Function to calculate and store intersections
     static void storeAndCalculateIntersections(
         const fvMesh& mesh_,
@@ -158,6 +160,9 @@ public:
         std::unordered_map<Foam::label, std::vector<Foam::point>> faceIntersectionsMap
     );
 
+    void printPatchEdges(const std::unordered_map<label, std::vector<std::pair<point, point>>>& patchEdges) const;
+    bool isEdgeInPatchEdges(const std::vector<point>& edge,const std::unordered_map<label, std::vector<std::pair<point, point>>>& patchEdges) const;
+
     void extractPatchEdges
     (
         const std::string& patchName,
@@ -165,7 +170,7 @@ public:
     );
             
     static std::vector<double> pOld;
-
+    static std::vector<std::vector<point>> faceIntersections; // edge vertices , intersection point makes a vector and the outer vector is for all edges of patch bottom 
 
     // Constructors
 

@@ -215,7 +215,7 @@ void Foam::advection::isoAdvection::timeIntegratedFlux()
     // Storage for isoFace points. Only used if writeIsoFacesToFile_
     DynamicList<List<point>> isoFacePts;
     const DynamicField<label>& interfaceLabels = surf_->interfaceLabels();
-
+    Info << timeIndex_ << " - from isoAdvection--  " <<  mesh_.time().timeIndex()<< "\n";
     // Loop through cells
     forAll(interfaceLabels, i)
     {

@@ -78,6 +78,7 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
         {
             value = 0;
         }
+        Info << value << "point status value " << faceI << endl;
         pointStatus_.append(value);
         if (pointStatus_[i] > 10 * SMALL)
         {
@@ -138,6 +139,7 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
     forAll(f, i)
     {
         pointStatus[i] = val[f[i]] - cutValue;
+        Info << val[f[i]] << "point status value " << f << endl;
         if (mag(pointStatus[i]) < 10 * SMALL)
         {
             pointStatus[i] = 0;
@@ -637,6 +639,7 @@ Foam::label Foam::cutFaceAdvect::calcSubFace
         {
             value = 0;
         }
+        Info << value << "point status value " << faceI << endl;
         pointStatus_.append(value);
         if (pointStatus_[i] > 10 * SMALL)
         {

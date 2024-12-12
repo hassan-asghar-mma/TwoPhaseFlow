@@ -93,7 +93,8 @@ Foam::label Foam::cutFacePLIC::calcSubFace
         {
             value = 0;
         }
-
+        // Info << "points: " << mesh_.points()[f[i]] << " base : " << base << " normal " << normal <<endl;
+        // Info << value << "PLIC point status value " << faceI << endl;
         pointStatus_.append(value);
         if (pointStatus_[i] > 0)
         {
